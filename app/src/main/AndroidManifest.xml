@@ -16,6 +16,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".MeetingScrollerActivity"
+            android:label="@string/title_activity_meeting_scroller"></activity>
         <activity android:name=".PartnersActivity"></activity>
     </application>
 
