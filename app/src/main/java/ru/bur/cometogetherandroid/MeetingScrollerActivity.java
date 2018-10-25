@@ -8,6 +8,10 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
+import java.time.LocalTime;
+
+import ru.bur.cometogetherandroid.model.Meeting;
+
 public class MeetingScrollerActivity extends AppCompatActivity {
 
     @Override
@@ -16,15 +20,20 @@ public class MeetingScrollerActivity extends AppCompatActivity {
         setContentView(R.layout.activity_meeting_scroller);
         TableLayout tableLayout = findViewById(R.id.meeting_scroller_table);
         for (int i = 0; i < 100; i++) {
-            tableLayout.addView(createTableRow());
+            Meeting meeting = new Meeting(
+                    "Волейбол с друзьями",
+                    "Площадка во дворе",
+                    LocalTime.of(18, 0)
+            );
+            tableLayout.addView(createTableRow(meeting));
         }
     }
 
-    private TableRow createTableRow() {
+    private TableRow createTableRow(Meeting meeting) {
         TableRow tableRow = new TableRow(this);
-        tableRow.addView(withText("Волейбол с друзьями"));
-        tableRow.addView(withText("Площадка во дворе"));
-        tableRow.addView(withText("18:00"));
+        tableRow.addView(withText(meeting.getName()));
+        tableRow.addView(withText(meeting.getPlace()));
+        tableRow.addView(withText(meeting.getTime().toString()));
         return tableRow;
     }
 

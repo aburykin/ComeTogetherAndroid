@@ -1,14 +1,14 @@
 package ru.bur.cometogetherandroid.model;
 
-public class Partner {
+public class Participant {
 
     String name;
-int photoPath;
-    public Partner(String name) {
+    int photoPath;
+    public Participant(String name) {
         this.name = name;
     }
 
-    public Partner(String name, int photoPath) {
+    public Participant(String name, int photoPath) {
         this.name = name;
         this.photoPath = photoPath;
     }
@@ -31,7 +31,7 @@ int photoPath;
 
     @Override
     public String toString() {
-        return "Partner{" +
+        return "Participant{" +
                 "name='" + name + '\'' +
                 ", photoPath=" + photoPath +
                 '}';

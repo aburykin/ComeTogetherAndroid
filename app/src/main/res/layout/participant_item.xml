@@ -12,19 +12,19 @@
         android:layout_height="wrap_content">
 
         <ImageView
-            android:id="@+id/partnerImage"
+            android:id="@+id/participantImage"
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"
-            app:layout_constraintBottom_toTopOf="@+id/partnerName"
+            app:layout_constraintBottom_toTopOf="@+id/participantName"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:srcCompat="@tools:sample/avatars[3]" />
 
         <TextView
-            android:id="@+id/partnerName"
+            android:id="@+id/participantName"
             android:layout_width="100dp"
             android:layout_height="35dp"
             android:layout_marginStart="8dp"

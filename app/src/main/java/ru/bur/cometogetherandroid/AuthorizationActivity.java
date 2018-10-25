@@ -34,7 +34,7 @@ public class AuthorizationActivity extends AppCompatActivity {
 
     //TODO: move it to the meeting on click processor
     public void onClick(View v) {
-        Intent intent = new Intent(this, PartnersActivity.class);
+        Intent intent = new Intent(this, ParticipantsActivity.class);
         startActivity(intent);
     }
 
