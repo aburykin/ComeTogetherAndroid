@@ -7,11 +7,14 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
+
+import ru.bur.cometogetherandroid.task.AskServer;
 
 public class AuthorizationActivity extends AppCompatActivity {
 
-    private final String CONNECTION_URL = "http://localhost/rest/android";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,8 +25,9 @@ public class AuthorizationActivity extends AppCompatActivity {
         TextView textView = findViewById(R.id.editText);
         button.setOnClickListener(
                 (v) -> {
-                    new RestTemplate().postForLocation(CONNECTION_URL, textView.getText());
-                    startActivity(new Intent(this, MeetingScrollerActivity.class));
+                        new AskServer().execute(textView.getText().toString());
+//                    restTemplate.postForLocation(CONNECTION_URL, restTemplate.postForLocation(CONNECTION_URL, textView.getText()));
+//                    startActivity(new Intent(this, MeetingScrollerActivity.class));
                 }
         );
     }
