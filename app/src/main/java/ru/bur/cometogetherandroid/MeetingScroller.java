@@ -1,45 +1,36 @@
 package ru.bur.cometogetherandroid;
 
 import android.os.Bundle;
-import android.app.Activity;
 import android.support.v7.app.AppCompatActivity;
-import android.view.View;
-import android.widget.TableLayout;
-import android.widget.TableRow;
-import android.widget.TextView;
+import android.widget.ListView;
 
+import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.List;
 
+import ru.bur.cometogetherandroid.adapter.MeetingScrollerRowAdapter;
 import ru.bur.cometogetherandroid.model.Meeting;
 
 public class MeetingScroller extends AppCompatActivity {
 
+    ListView listView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_meeting_scroller);
-        TableLayout tableLayout = findViewById(R.id.meeting_scroller_table);
+        setContentView(R.layout.meeting_scroller);
+
+        listView = findViewById(R.id.meetingList);
+
+        List<Meeting> meetings = new ArrayList<>();
         for (int i = 0; i < 100; i++) {
-            Meeting meeting = new Meeting(
-                    "Волейбол с друзьями",
-                    "Площадка во дворе",
-                    LocalTime.of(18, 0)
-            );
-            tableLayout.addView(createTableRow(meeting));
+            meetings.add(new Meeting("Волейбол с друзьями", "Площадка во дворе", LocalDate.of(2018, 11, 5), LocalTime.of(18, 0), i));
         }
+
+        MeetingScrollerRowAdapter meetingScrollerRowAdapter = new MeetingScrollerRowAdapter(this, meetings);
+        listView.setAdapter(meetingScrollerRowAdapter);
+
     }
 
-    private TableRow createTableRow(Meeting meeting) {
-        TableRow tableRow = new TableRow(this);
-        tableRow.addView(withText(meeting.getName()));
-        tableRow.addView(withText(meeting.getPlace()));
-        tableRow.addView(withText(meeting.getTime().toString()));
-        return tableRow;
-    }
-
-    private TextView withText(String text) {
-        TextView textView = new TextView(this);
-        textView.setText(text);
-        return textView;
-    }
 }
