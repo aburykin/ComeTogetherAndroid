@@ -11,6 +11,7 @@ public class ShowMeeting extends AppCompatActivity {
     Button leaveMeetingBtn;
 
     TextInputEditText meetingName;
+    TextInputEditText meetingPlace;
     TextInputEditText meetingDate;
     TextInputEditText meetingTime;
     TextInputEditText meetingDescription;
@@ -31,11 +32,13 @@ public class ShowMeeting extends AppCompatActivity {
 
         // тестовые скрипты
         meetingName = findViewById(R.id.meetingName);
+        meetingPlace = findViewById(R.id.meetingPlace);
         meetingDate = findViewById(R.id.meetingDate);
         meetingTime = findViewById(R.id.meetingTime);
         meetingDescription = findViewById(R.id.meetingDescription);
 
         meetingName.setText("тестовое название встречи");
+        meetingPlace.setText("Место встречи изменить нельзя!");
         meetingDate.setText("23.03.2019");
         meetingTime.setText("23:59");
         meetingDescription.setText("тестовое название встречи такое большое что совсем не умещается на одном экране, поэтому оно будет переноситься по нему");
