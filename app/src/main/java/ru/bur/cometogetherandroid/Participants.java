@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import ru.bur.cometogetherandroid.adapter.ParticipantAdapter;
 import ru.bur.cometogetherandroid.model.Participant;
 
-public class ParticipantsActivity extends AppCompatActivity {
+public class Participants extends AppCompatActivity {
 
     private GridView gridView;
 

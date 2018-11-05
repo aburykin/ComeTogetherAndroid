@@ -13,7 +13,7 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".AuthorizationActivity"
+            android:name=".Authorization"
             android:label="Авторизация">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -22,10 +22,10 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".MeetingScrollerActivity"
+            android:name=".MeetingScroller"
             android:label="@string/title_activity_meeting_scroller" />
         <activity
-            android:name=".ParticipantsActivity"
+            android:name=".Participants"
             android:label="Участники встречи" />
         <activity
             android:name=".CreateMeeting"

@@ -12,7 +12,7 @@ import java.time.LocalTime;
 
 import ru.bur.cometogetherandroid.model.Meeting;
 
-public class MeetingScrollerActivity extends AppCompatActivity {
+public class MeetingScroller extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

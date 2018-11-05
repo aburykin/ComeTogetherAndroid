@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MeetingScrollerActivity">
+    tools:context=".MeetingScroller">
 
     <TableLayout
         android:id="@+id/meeting_scroller_table"

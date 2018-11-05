@@ -9,12 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import org.springframework.http.converter.StringHttpMessageConverter;
-import org.springframework.web.client.RestTemplate;
-
-import ru.bur.cometogetherandroid.task.AskServer;
-
-public class AuthorizationActivity extends AppCompatActivity {
+public class Authorization extends AppCompatActivity {
 
     private View.OnClickListener onClickListener;
 
@@ -32,7 +27,7 @@ public class AuthorizationActivity extends AppCompatActivity {
 
     //TODO: move it to the meeting on click processor
     public void onClick(View v) {
-        Intent intent = new Intent(this, ParticipantsActivity.class);
+        Intent intent = new Intent(this, Participants.class);
         startActivity(intent);
     }
 
@@ -52,11 +47,11 @@ public class AuthorizationActivity extends AppCompatActivity {
         Intent intent;
         switch (item.getItemId()) {
             case 1:
-                intent= new Intent(this, AuthorizationActivity.class);
+                intent= new Intent(this, Authorization.class);
                 startActivity(intent);
                 break;
             case 2:
-                 intent = new Intent(this, MeetingScrollerActivity.class);
+                 intent = new Intent(this, MeetingScroller.class);
                 startActivity(intent);
                 break;
             case 3:
@@ -68,7 +63,7 @@ public class AuthorizationActivity extends AppCompatActivity {
                 startActivity(intent);
                 break;
             case 5:
-                 intent = new Intent(this, ParticipantsActivity.class);
+                 intent = new Intent(this, Participants.class);
                 startActivity(intent);
                 break;
         }

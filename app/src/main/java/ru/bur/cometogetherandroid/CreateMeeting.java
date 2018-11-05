@@ -36,7 +36,7 @@ public class CreateMeeting extends AppCompatActivity {
 
             //TODO отправляет запрос в БД
 
-            Intent intent = new Intent(this, MeetingScrollerActivity.class);
+            Intent intent = new Intent(this, MeetingScroller.class);
             startActivity(intent);
         });
 
