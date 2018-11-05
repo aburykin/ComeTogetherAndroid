@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">ComeTogetherAndroid</string>
-    <string name="title_activity_meeting_scroller">MeetingScrollerActivity</string>
+    <string name="title_activity_meeting_scroller">Все встречи</string>
     <string name="large_text">
         "Material is the metaphor.\n\n"
 
