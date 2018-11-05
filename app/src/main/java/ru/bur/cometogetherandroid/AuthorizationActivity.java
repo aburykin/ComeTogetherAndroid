@@ -64,8 +64,8 @@ public class AuthorizationActivity extends AppCompatActivity {
                 startActivity(intent);
                 break;
             case 4:
-             //    intent = new Intent(this, .class);
-              //  startActivity(intent);
+                 intent = new Intent(this, ShowMeeting.class);
+                startActivity(intent);
                 break;
             case 5:
                  intent = new Intent(this, ParticipantsActivity.class);

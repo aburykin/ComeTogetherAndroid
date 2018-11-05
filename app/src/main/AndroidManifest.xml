@@ -12,7 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".AuthorizationActivity" android:label="Авторизация">
+        <activity
+            android:name=".AuthorizationActivity"
+            android:label="Авторизация">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -22,8 +24,13 @@
         <activity
             android:name=".MeetingScrollerActivity"
             android:label="@string/title_activity_meeting_scroller" />
-        <activity android:name=".ParticipantsActivity" android:label="Участники встречи"/>
-        <activity android:name=".CreateMeeting" android:label="Создание встречи"></activity>
+        <activity
+            android:name=".ParticipantsActivity"
+            android:label="Участники встречи" />
+        <activity
+            android:name=".CreateMeeting"
+            android:label="Создание встречи" />
+        <activity android:name=".ShowMeeting"  android:label="Просмотр встречи"></activity>
     </application>
 
 </manifest>
