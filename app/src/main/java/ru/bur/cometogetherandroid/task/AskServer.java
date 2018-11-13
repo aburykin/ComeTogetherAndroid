@@ -1,6 +1,7 @@
 package ru.bur.cometogetherandroid.task;
 
 import android.os.AsyncTask;
+import android.util.Log;
 
 import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
@@ -12,6 +13,7 @@ public class AskServer extends AsyncTask<String, Void, Void> {
     @Override
     protected Void doInBackground(String... strings) {
         RestTemplate restTemplate = new RestTemplate();
+        Log.d("qwe", "test");
         restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
         String result = restTemplate.postForObject(CONNECTION_URL, strings[0], String.class);
         return null;

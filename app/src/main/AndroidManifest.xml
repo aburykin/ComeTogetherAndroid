@@ -14,7 +14,8 @@
         android:usesCleartextTraffic="true">
         <activity
             android:name=".Authorization"
-            android:label="Авторизация">
+            android:label="Авторизация"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -23,14 +24,26 @@
         </activity>
         <activity
             android:name=".MeetingScroller"
-            android:label="@string/title_activity_meeting_scroller" />
+            android:label="@string/title_activity_meeting_scroller"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".Participants"
-            android:label="Участники встречи" />
+            android:label="Участники встречи"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".CreateMeeting"
-            android:label="Создание встречи" />
-        <activity android:name=".ShowMeeting"  android:label="Просмотр встречи"></activity>
+            android:label="Создание встречи"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ShowMeeting"
+            android:label="Просмотр встречи"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".UserProfile"
+            android:label="Ваш профиль"
+            android:screenOrientation="portrait" />
+
+
     </application>
 
 </manifest>

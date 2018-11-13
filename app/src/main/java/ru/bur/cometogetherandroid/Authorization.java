@@ -20,9 +20,7 @@ public class Authorization extends AppCompatActivity {
 
         Button button = findViewById(R.id.signIn);
         TextView textView = findViewById(R.id.editText);
-        button.setOnClickListener(
-                onClickListener
-        );
+        button.setOnClickListener(onClickListener);
     }
 
     //TODO: move it to the meeting on click processor
@@ -39,6 +37,7 @@ public class Authorization extends AppCompatActivity {
         menu.add(1, 3, 3, "Создать новую встречу");
         menu.add(1, 4, 4, "Посмотреть встречу");
         menu.add(1, 5, 5, "Посмотреть участников встречи");
+        menu.add(1, 6, 6, "Профиль пользователя");
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -64,6 +63,9 @@ public class Authorization extends AppCompatActivity {
                 break;
             case 5:
                  intent = new Intent(this, Participants.class);
+                startActivity(intent);
+            case 6:
+                intent = new Intent(this, UserProfile.class);
                 startActivity(intent);
                 break;
         }
