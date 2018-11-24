@@ -16,6 +16,7 @@ import org.springframework.web.client.RestTemplate;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import ru.bur.cometogetherandroid.task.AskServer;
 import ru.bur.cometogetherandroid.task.AuthorizationTask;
 
 public class Authorization extends AppCompatActivity {
@@ -36,11 +37,11 @@ public class Authorization extends AppCompatActivity {
         button.setOnClickListener(v -> {
             // проверяю данные
             String phoneNumberStr = phoneNumber.getText().toString();
+            AuthorizationTask authorizationTask = new AuthorizationTask();
+            authorizationTask.execute(phoneNumberStr);
 
             if (checkNumber(phoneNumberStr)) {
-                AuthorizationTask authorizationTask = new AuthorizationTask();
-                authorizationTask.execute(phoneNumberStr);
-
+                // AskServer authorizationTask = new AskServer();
             } else {
                 //TODO нужно дать пользователю понять, что он ошибся.
                 Log.e(LOG_TAG, "phoneNumberStr=" + phoneNumberStr);
