@@ -6,18 +6,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-
-import org.springframework.http.converter.StringHttpMessageConverter;
-import org.springframework.web.client.RestTemplate;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import ru.bur.cometogetherandroid.task.AskServer;
-import ru.bur.cometogetherandroid.task.AuthorizationTask;
+import ru.bur.cometogetherandroid.rest.AppUserRestClient;
+import ru.bur.dto.AuthDto;
 
 public class Authorization extends AppCompatActivity {
 
@@ -29,23 +25,19 @@ public class Authorization extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.authorization);
-
-
         phoneNumber = findViewById(R.id.phoneNumber);
 
         Button button = findViewById(R.id.signIn);
         button.setOnClickListener(v -> {
-            // проверяю данные
             String phoneNumberStr = phoneNumber.getText().toString();
-            AuthorizationTask authorizationTask = new AuthorizationTask();
-            authorizationTask.execute(phoneNumberStr);
+            Log.e(LOG_TAG, "phoneNumberStr=" + phoneNumberStr);
 
-            if (checkNumber(phoneNumberStr)) {
-                // AskServer authorizationTask = new AskServer();
-            } else {
-                //TODO нужно дать пользователю понять, что он ошибся.
-                Log.e(LOG_TAG, "phoneNumberStr=" + phoneNumberStr);
-            }
+            AuthDto authDto = new AuthDto();
+            authDto.setPhoneNumber(phoneNumberStr);
+            AppUserRestClient.authorization(this, authDto);
+
+            System.out.println();
+            // тут нужно получить результат запроса
         });
     }
 
@@ -98,3 +90,18 @@ public class Authorization extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 }
+
+ /*
+            // проверяю данные
+
+
+            AuthorizationTask authorizationTask = new AuthorizationTask();
+            authorizationTask.execute(phoneNumberStr);
+
+            if (checkNumber(phoneNumberStr)) {
+                // AskServer authorizationTask = new AskServer();
+            } else {
+                //TODO нужно дать пользователю понять, что он ошибся.
+
+            }
+            */
