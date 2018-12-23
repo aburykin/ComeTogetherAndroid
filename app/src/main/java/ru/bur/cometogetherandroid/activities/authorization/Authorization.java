@@ -51,8 +51,10 @@ public class Authorization extends AppCompatActivity {
 
         signInButton.setOnClickListener(v -> {
             String phoneNumberStr = phoneNumber.getText().toString();
-            checkNumber(phoneNumberStr);
-            autorizationPresender.tryAuthorization(phoneNumberStr);
+            if (isCorrectNumber(phoneNumberStr)) {
+                autorizationPresender.tryAuthorization(phoneNumberStr);
+            }
+
         });
     }
 
@@ -98,11 +100,13 @@ public class Authorization extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private void checkNumber(String phoneNumber) {
+    private boolean isCorrectNumber(String phoneNumber) {
         Matcher matcher = pattern.matcher(phoneNumber);
-        if (!matcher.matches()) {
+        boolean isCorrect = matcher.matches();
+        if (!isCorrect) {
             Toast.makeText(Authorization.this, "Номер телефона должен содержать 10 цифр.", Toast.LENGTH_LONG).show();
         }
+        return isCorrect;
     }
 
     public void completeAuthorizationSuccess(String authorizationToken) {
