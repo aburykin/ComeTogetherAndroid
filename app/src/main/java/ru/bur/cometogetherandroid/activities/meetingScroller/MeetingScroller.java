@@ -1,4 +1,4 @@
-package ru.bur.cometogetherandroid;
+package ru.bur.cometogetherandroid.activities.meetingScroller;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -9,7 +9,7 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
-import ru.bur.cometogetherandroid.adapter.MeetingScrollerRowAdapter;
+import ru.bur.cometogetherandroid.R;
 import ru.bur.cometogetherandroid.model.Meeting;
 
 public class MeetingScroller extends AppCompatActivity {

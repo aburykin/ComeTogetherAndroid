@@ -1,4 +1,4 @@
-package ru.bur.cometogetherandroid.adapter;
+package ru.bur.cometogetherandroid.activities.participants;
 
 import android.content.Context;
 import android.view.LayoutInflater;

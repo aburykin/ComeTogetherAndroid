@@ -1,4 +1,4 @@
-package ru.bur.cometogetherandroid;
+package ru.bur.cometogetherandroid.activities.createMeeting;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
@@ -13,6 +13,9 @@ import android.widget.TimePicker;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+
+import ru.bur.cometogetherandroid.R;
+import ru.bur.cometogetherandroid.activities.meetingScroller.MeetingScroller;
 
 public class CreateMeeting extends AppCompatActivity {
 

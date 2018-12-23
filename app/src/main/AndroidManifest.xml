@@ -1,20 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="ru.bur.cometogetherandroid">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.NE" />
 
     <application
+        android:name=".ComeTogetherApp"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-        android:usesCleartextTraffic="true">
+        android:usesCleartextTraffic="true"
+        tools:ignore="GoogleAppIndexingWarning">
         <activity
-            android:name=".Authorization"
+            android:name=".activities.authorization.Authorization"
             android:label="Come together"
             android:screenOrientation="portrait">
             <intent-filter>
@@ -24,23 +27,23 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".MeetingScroller"
+            android:name=".activities.meetingScroller.MeetingScroller"
             android:label="@string/title_activity_meeting_scroller"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Participants"
+            android:name=".activities.participants.Participants"
             android:label="Участники встречи"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".CreateMeeting"
+            android:name=".activities.createMeeting.CreateMeeting"
             android:label="Создание встречи"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ShowMeeting"
+            android:name=".activities.showMeeting.ShowMeeting"
             android:label="Просмотр встречи"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".UserProfile"
+            android:name=".activities.userProfile.UserProfile"
             android:label="Ваш профиль"
             android:screenOrientation="portrait" />
 

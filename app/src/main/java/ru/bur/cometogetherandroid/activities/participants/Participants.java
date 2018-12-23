@@ -1,4 +1,4 @@
-package ru.bur.cometogetherandroid;
+package ru.bur.cometogetherandroid.activities.participants;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -6,7 +6,7 @@ import android.widget.GridView;
 
 import java.util.ArrayList;
 
-import ru.bur.cometogetherandroid.adapter.ParticipantAdapter;
+import ru.bur.cometogetherandroid.R;
 import ru.bur.cometogetherandroid.model.Participant;
 
 public class Participants extends AppCompatActivity {

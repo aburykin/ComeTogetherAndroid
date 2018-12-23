@@ -9,7 +9,7 @@ import org.springframework.web.client.RestTemplate;
 public class AskServer extends AsyncTask<String, Void, Void> {
 
 //    private final String CONNECTION_URL = "http://10.0.2.2:8080/rest/android";
-    private final String CONNECTION_URL = "http://192.168.0.101:8080/rest/android";
+    private final String CONNECTION_URL = "http://192.168.0.102:8080/rest/android";
 
     @Override
     protected Void doInBackground(String... strings) {

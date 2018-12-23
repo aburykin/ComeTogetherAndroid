@@ -1,19 +1,12 @@
 package ru.bur.cometogetherandroid.task;
 
 import android.os.AsyncTask;
-import android.util.Log;
 
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.ResponseEntity;
-import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.StringHttpMessageConverter;
-import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
 
 import ru.bur.cometogetherandroid.util.AppClient;
 import ru.bur.dto.AppUserDto;
-import ru.bur.dto.AuthDto;
 
 public class AuthorizationTask extends AsyncTask<String, Void, String> {
     private String LOG_TAG = "cometogetherandroid ";

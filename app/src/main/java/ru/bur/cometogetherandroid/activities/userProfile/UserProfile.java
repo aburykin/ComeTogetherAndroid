@@ -1,8 +1,10 @@
-package ru.bur.cometogetherandroid;
+package ru.bur.cometogetherandroid.activities.userProfile;
 
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
+import ru.bur.cometogetherandroid.R;
 
 public class UserProfile extends AppCompatActivity {
 
