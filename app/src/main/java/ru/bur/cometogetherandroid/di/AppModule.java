@@ -7,6 +7,7 @@ import javax.inject.Singleton;
 import dagger.Module;
 import dagger.Provides;
 import ru.bur.cometogetherandroid.activities.authorization.AutorizationPresender;
+import ru.bur.cometogetherandroid.activities.meetingScroller.MeetingScrollerPresender;
 import ru.bur.cometogetherandroid.common.Cookies;
 
 @Module
@@ -34,6 +35,12 @@ public class AppModule {
     @Singleton
     AutorizationPresender autorizationPresender(Cookies cookies) {
         return new AutorizationPresender(cookies);
+    }
+
+    @Provides
+    @Singleton
+    MeetingScrollerPresender meetingScrollerPresender(Cookies cookies) {
+        return new MeetingScrollerPresender(cookies);
     }
 
 

@@ -34,6 +34,8 @@ public class AutorizationPresender {
     public void tryAuthorization(String phoneNumber) {
         AuthDto authDto = new AuthDto();
         authDto.setPhoneNumber(phoneNumber);
+        authDto.setAuthorization_token(cookies.get("token"));
+
 
         debug(LOG_TAG, "tryAutorization(): authDto=" + authDto);
 

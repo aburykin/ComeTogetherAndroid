@@ -40,9 +40,6 @@ public class Authorization extends AppCompatActivity {
     @BindView(R.id.signIn)
     Button signInButton;
 
-    @BindView(R.id.result_auth_tv)
-    TextView result_auth_tv;
-
     @BindView(R.id.progressBar)
     ProgressBar progressBar;
 
@@ -118,7 +115,6 @@ public class Authorization extends AppCompatActivity {
     }
 
     public void completeAuthorizationSuccess(String authorizationToken) {
-        result_auth_tv.setText(authorizationToken);
         Intent intent = new Intent(this, MeetingScroller.class);
         startActivity(intent);
     }
