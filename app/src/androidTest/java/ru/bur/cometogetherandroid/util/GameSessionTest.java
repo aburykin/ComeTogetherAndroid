@@ -4,7 +4,7 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
-public class GameSessionTest {
+public class GameSessionTest { // TODO, можно удалить
     @Test
     public void testGameSession() {
         GameSession session = new GameSession();

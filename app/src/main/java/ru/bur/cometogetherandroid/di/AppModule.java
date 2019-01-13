@@ -32,8 +32,8 @@ public class AppModule {
 
     @Provides
     @Singleton
-    AutorizationPresender autorizationPresender() {
-        return new AutorizationPresender();
+    AutorizationPresender autorizationPresender(Cookies cookies) {
+        return new AutorizationPresender(cookies);
     }
 
 

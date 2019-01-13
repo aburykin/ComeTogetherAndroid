@@ -18,8 +18,13 @@ public class AutorizationPresender {
 
     private String LOG_TAG = "AutorizationPresender";
     private Authorization view;
+    private Cookies cookies;
+
     @Inject
-    protected Cookies cookies;
+    public AutorizationPresender(Cookies cookies) {
+        this.cookies = cookies;
+    }
+
 
 
     public void attachView(Authorization activity) {

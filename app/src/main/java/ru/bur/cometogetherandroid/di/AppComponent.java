@@ -9,7 +9,7 @@ import ru.bur.cometogetherandroid.common.Cookies;
 
 @Singleton
 @Component(modules = {AppModule.class})
-public interface AppComponents {
+public interface AppComponent {
 
     void inject(Cookies cookies);
 

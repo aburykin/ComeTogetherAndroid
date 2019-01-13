@@ -52,7 +52,7 @@ public class Authorization extends AppCompatActivity {
         setContentView(R.layout.authorization);
         ButterKnife.bind(this);
 
-        ((ComeTogetherApp) getApplicationContext()).getAppComponents().inject(this);
+        ((ComeTogetherApp) getApplicationContext()).getAppComponent().inject(this); // внедрение зависимостей происходит вручную
 
 
         autorizationPresender.attachView(this);
