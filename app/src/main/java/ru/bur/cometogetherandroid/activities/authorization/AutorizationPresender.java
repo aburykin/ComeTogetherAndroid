@@ -1,9 +1,13 @@
 package ru.bur.cometogetherandroid.activities.authorization;
 
+import javax.inject.Inject;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import ru.bur.cometogetherandroid.ComeTogetherApp;
+import ru.bur.cometogetherandroid.common.Cookies;
+import ru.bur.cometogetherandroid.common.CookiesEnum;
 import ru.bur.dto.AppUserDto;
 import ru.bur.dto.AuthDto;
 
@@ -13,8 +17,10 @@ import static ru.bur.cometogetherandroid.MainLogger.error;
 public class AutorizationPresender {
 
     private String LOG_TAG = "AutorizationPresender";
-
     private Authorization view;
+    @Inject
+    protected Cookies cookies;
+
 
     public void attachView(Authorization activity) {
         view = activity;
@@ -34,6 +40,7 @@ public class AutorizationPresender {
                 debug(LOG_TAG, "tryAutorization(): response=" + response);
                 AppUserDto dto = response.body();
                 if (dto != null) {
+                    cookies.set(CookiesEnum.token.toString(), dto.getAuthorizationToken());
                     view.completeAuthorizationSuccess(dto.getAuthorizationToken());
                 } else {
                     view.completeAuthorizationFault("Авторизоваться не удалось: " + response.message()); //TODO

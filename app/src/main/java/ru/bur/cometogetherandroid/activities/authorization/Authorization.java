@@ -14,8 +14,11 @@ import android.widget.Toast;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javax.inject.Inject;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import ru.bur.cometogetherandroid.ComeTogetherApp;
 import ru.bur.cometogetherandroid.R;
 import ru.bur.cometogetherandroid.activities.createMeeting.CreateMeeting;
 import ru.bur.cometogetherandroid.activities.meetingScroller.MeetingScroller;
@@ -26,7 +29,9 @@ import ru.bur.cometogetherandroid.activities.userProfile.UserProfile;
 public class Authorization extends AppCompatActivity {
 
     private String LOG_TAG = "Authorization";
-    private AutorizationPresender autorizationPresender = new AutorizationPresender();
+
+    @Inject
+    public AutorizationPresender autorizationPresender;
     private Pattern pattern = Pattern.compile("[0-9]{10}");
 
     @BindView(R.id.phoneNumber)
@@ -46,6 +51,9 @@ public class Authorization extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.authorization);
         ButterKnife.bind(this);
+
+        ((ComeTogetherApp) getApplicationContext()).getAppComponents().inject(this);
+
 
         autorizationPresender.attachView(this);
 
