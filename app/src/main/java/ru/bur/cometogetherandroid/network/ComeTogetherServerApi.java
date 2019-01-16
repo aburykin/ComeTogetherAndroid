@@ -8,7 +8,7 @@ import ru.bur.dto.AuthDto;
 
 public interface ComeTogetherServerApi {
 
-    @POST("/user/auth")
+    @POST("/auth")
     Call<AppUserDto> tryAuth(@Body AuthDto authDto);
 
 }

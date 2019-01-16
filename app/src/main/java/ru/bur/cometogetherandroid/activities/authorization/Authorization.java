@@ -1,6 +1,5 @@
 package ru.bur.cometogetherandroid.activities.authorization;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -59,9 +58,15 @@ public class Authorization extends AppCompatActivity {
             if (isCorrectNumber(phoneNumberStr)) {
                 autorizationPresender.tryAuthorization(phoneNumberStr);
             }
-
         });
+
+        if (autorizationPresender.isUserAuthrizated()) {
+            Intent intent = new Intent(this, MeetingScroller.class);
+            startActivity(intent);
+        }
+
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

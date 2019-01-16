@@ -3,8 +3,7 @@ package ru.bur.cometogetherandroid.common;
 public enum CookiesEnum {
 
     os("os"),
-    token("token"),
-    session_id("session_id");
+    token("user_token");
 
     private String name;
 

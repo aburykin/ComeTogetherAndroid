@@ -26,23 +26,31 @@ public class AutorizationPresender {
     }
 
 
-
     public void attachView(Authorization activity) {
         view = activity;
+    }
+
+
+    /**
+     * Проверяем есть ли у пользователя токен, и если есть, то пропускает страницу авторизации.
+     */
+    public boolean isUserAuthrizated() {
+        String token = cookies.get(CookiesEnum.token.toString());
+        if (token != null && !token.isEmpty()) {
+            return true;
+        }
+        return false;
     }
 
     public void tryAuthorization(String phoneNumber) {
         AuthDto authDto = new AuthDto();
         authDto.setPhoneNumber(phoneNumber);
-        authDto.setAuthorization_token(cookies.get("token"));
-
-
         debug(LOG_TAG, "tryAutorization(): authDto=" + authDto);
 
         view.showProgress();
         ComeTogetherApp.getApi().tryAuth(authDto).enqueue(new Callback<AppUserDto>() {
             @Override
-            public void onResponse(Call<AppUserDto> call, Response<AppUserDto> response) {   // сюда попадаем, если пришел ответ от сервера, даже если это ошибка 500.  TODO как ее обработать правильно? да и как ее сервером правильно кинуть?
+            public void onResponse(Call<AppUserDto> call, Response<AppUserDto> response) {
                 view.hideProgress();
                 debug(LOG_TAG, "tryAutorization(): response=" + response);
                 AppUserDto dto = response.body();
@@ -50,7 +58,7 @@ public class AutorizationPresender {
                     cookies.set(CookiesEnum.token.toString(), dto.getAuthorizationToken());
                     view.completeAuthorizationSuccess(dto.getAuthorizationToken());
                 } else {
-                    view.completeAuthorizationFault("Авторизоваться не удалось: " + response.message()); //TODO
+                    view.completeAuthorizationFault("Авторизоваться не удалось, попробуйте позднее.");
                 }
             }
 
