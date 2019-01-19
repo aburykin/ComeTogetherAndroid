@@ -33,7 +33,7 @@ public class ShowMeeting extends AppCompatActivity {
         });
 
         // тестовые скрипты
-        meetingName = findViewById(R.id.userPhone);
+        meetingName = findViewById(R.id.meetingName);
         meetingPlace = findViewById(R.id.meetingPlace);
         meetingDate = findViewById(R.id.meetingDate);
         meetingTime = findViewById(R.id.meetingTime);

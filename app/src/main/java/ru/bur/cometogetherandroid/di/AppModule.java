@@ -8,6 +8,7 @@ import dagger.Module;
 import dagger.Provides;
 import ru.bur.cometogetherandroid.ComeTogetherApp;
 import ru.bur.cometogetherandroid.activities.authorization.AutorizationPresender;
+import ru.bur.cometogetherandroid.activities.createMeeting.CreateMeetingPresender;
 import ru.bur.cometogetherandroid.activities.meetingScroller.MeetingScrollerPresender;
 import ru.bur.cometogetherandroid.common.Cookies;
 import ru.bur.cometogetherandroid.network.AddCookiesInterceptor;
@@ -43,6 +44,12 @@ public class AppModule {
     @Singleton
     MeetingScrollerPresender meetingScrollerPresender(Cookies cookies) {
         return new MeetingScrollerPresender(cookies);
+    }
+
+    @Provides
+    @Singleton
+    CreateMeetingPresender createMeetingPresender() {
+        return new CreateMeetingPresender();
     }
 
     @Provides

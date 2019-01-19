@@ -11,8 +11,8 @@ import ru.bur.cometogetherandroid.common.CookiesEnum;
 import ru.bur.dto.AppUserDto;
 import ru.bur.dto.AuthDto;
 
-import static ru.bur.cometogetherandroid.MainLogger.debug;
-import static ru.bur.cometogetherandroid.MainLogger.error;
+import static ru.bur.cometogetherandroid.util.MainLogger.debug;
+import static ru.bur.cometogetherandroid.util.MainLogger.error;
 
 public class AutorizationPresender {
 

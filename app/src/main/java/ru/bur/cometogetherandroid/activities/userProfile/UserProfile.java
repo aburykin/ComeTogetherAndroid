@@ -17,6 +17,6 @@ public class UserProfile extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.user_profile);
         userName = findViewById(R.id.userName);
-        userPhone = findViewById(R.id.userPhone);
+        userPhone = findViewById(R.id.meetingName);
     }
 }

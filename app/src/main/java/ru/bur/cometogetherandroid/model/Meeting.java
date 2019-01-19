@@ -6,10 +6,12 @@ import java.time.LocalTime;
 import lombok.Data;
 
 @Data
-public class Meeting {
-    private final String name;
-    private final String place;
-    private final LocalDate date;
-    private final LocalTime time;
-    private final Integer amountParticipants;
+public class Meeting{
+    private Long id;
+    private String name;
+    private String place;
+    private LocalDate date;
+    private LocalTime time;
+    private String description;
+    private Integer amountParticipants;
 }

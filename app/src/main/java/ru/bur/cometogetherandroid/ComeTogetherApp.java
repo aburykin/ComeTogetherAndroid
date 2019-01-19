@@ -2,8 +2,6 @@ package ru.bur.cometogetherandroid;
 
 import android.app.Application;
 
-import javax.inject.Inject;
-
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -13,6 +11,7 @@ import ru.bur.cometogetherandroid.di.AppModule;
 import ru.bur.cometogetherandroid.di.DaggerAppComponent;
 import ru.bur.cometogetherandroid.network.AddCookiesInterceptor;
 import ru.bur.cometogetherandroid.network.ComeTogetherServerApi;
+import ru.bur.cometogetherandroid.network.NullOnEmptyConverterFactory;
 
 public class ComeTogetherApp extends Application {
 
@@ -38,12 +37,12 @@ public class ComeTogetherApp extends Application {
         // Создаем объект, при помощи которого будем выполнять запросы
         retrofit = new Retrofit.Builder()
                 .baseUrl(baseUrl)
-                .addConverterFactory(GsonConverterFactory.create()) //Конвертер, необходимый для преобразования JSON'а в объекты
+            //    .addConverterFactory(new NullOnEmptyConverterFactory())
+                .addConverterFactory(GsonConverterFactory.create())
                 .client(httpClient.build())
                 .build();
 
         comeTogetherServerApi = retrofit.create(ComeTogetherServerApi.class);
-
 
 
     }

@@ -1,4 +1,4 @@
-package ru.bur.cometogetherandroid;
+package ru.bur.cometogetherandroid.util;
 
 import android.util.Log;
 

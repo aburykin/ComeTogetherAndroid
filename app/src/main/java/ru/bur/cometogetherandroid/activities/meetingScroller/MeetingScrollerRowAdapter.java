@@ -48,7 +48,7 @@ public class MeetingScrollerRowAdapter extends BaseAdapter {
         }
         Meeting meeting = getMeeting(position);
 
-        TextView meetingName = convertView.findViewById(R.id.userPhone);
+        TextView meetingName = convertView.findViewById(R.id.meetingName);
         TextView meetingPlace = convertView.findViewById(R.id.meetingPlace);
         TextView meetingDate = convertView.findViewById(R.id.meetingDate);
         TextView meetingTime = convertView.findViewById(R.id.meetingTime);
@@ -56,9 +56,9 @@ public class MeetingScrollerRowAdapter extends BaseAdapter {
 
         meetingName.setText(meeting.getName());
         meetingPlace.setText(meeting.getPlace());
-        meetingDate.setText(meeting.getDate().toString());
-        meetingTime.setText(meeting.getTime().toString());
-        amountParticipants.setText(meeting.getAmountParticipants().toString());
+//        meetingDate.setText(meeting.getDate().toString());
+//        meetingTime.setText(meeting.getTime().toString());
+//        amountParticipants.setText(meeting.getAmountParticipants().toString());
 
         return convertView;
     }
