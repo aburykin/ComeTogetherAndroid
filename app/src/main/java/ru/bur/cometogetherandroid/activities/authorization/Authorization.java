@@ -64,7 +64,6 @@ public class Authorization extends AppCompatActivity {
             Intent intent = new Intent(this, MeetingScroller.class);
             startActivity(intent);
         }
-
     }
 
 

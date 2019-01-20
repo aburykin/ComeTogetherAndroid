@@ -15,6 +15,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import ru.bur.cometogetherandroid.ComeTogetherApp;
 import ru.bur.cometogetherandroid.R;
+import ru.bur.cometogetherandroid.activities.authorization.Authorization;
 import ru.bur.cometogetherandroid.activities.createMeeting.CreateMeeting;
 import ru.bur.cometogetherandroid.model.Meeting;
 
@@ -59,5 +60,8 @@ public class MeetingScroller extends AppCompatActivity {
         meetingScrollerRowAdapter.notifyDataSetChanged();
     }
 
-
+    public void goToAuthorization() {
+        Intent intent = new Intent(this, Authorization.class);
+        startActivity(intent);
+    }
 }

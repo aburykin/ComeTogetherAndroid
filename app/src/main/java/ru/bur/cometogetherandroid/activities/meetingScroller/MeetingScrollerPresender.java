@@ -1,5 +1,7 @@
 package ru.bur.cometogetherandroid.activities.meetingScroller;
 
+import org.springframework.http.HttpStatus;
+
 import java.util.List;
 
 import javax.inject.Inject;
@@ -9,6 +11,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import ru.bur.cometogetherandroid.ComeTogetherApp;
 import ru.bur.cometogetherandroid.common.Cookies;
+import ru.bur.cometogetherandroid.common.CookiesEnum;
 import ru.bur.cometogetherandroid.model.Meeting;
 import ru.bur.dto.MeetingDto;
 
@@ -20,7 +23,6 @@ public class MeetingScrollerPresender {
     private String LOG_TAG = "MeetingScrollerPresender";
     private MeetingScroller view;
     private Cookies cookies;
-
 
     @Inject
     public MeetingScrollerPresender(Cookies cookies) {
@@ -37,19 +39,25 @@ public class MeetingScrollerPresender {
             @Override
             public void onResponse(Call<List<MeetingDto>> call, Response<List<MeetingDto>> response) {
                 debug(LOG_TAG, "getMeetings(): response=" + response);
-                List<MeetingDto> meetingDtos = response.body();
 
-                meetingDtos.forEach(x -> {
-                    Meeting meeting = new Meeting();
-                    meeting.setId(x.getId());
-                    meeting.setName(x.getName());
-                    meeting.setPlace(x.getPlace());
-                    meeting.setDescription(x.getDescription());
-                    meetings.add(meeting);
-                });
-
-                view.updateMeetingScroller();
-
+                // если не авторизован, то вернуться на страницу авторизации.
+                if ( response.isSuccessful() == false){
+                    if ( response.code() == HttpStatus.UNAUTHORIZED.value()){
+                        cookies.set(CookiesEnum.token.toString(), null);
+                        view.goToAuthorization();
+                    }
+                } else {
+                    List<MeetingDto> meetingDtos = response.body();
+                    meetingDtos.forEach(x -> {
+                        Meeting meeting = new Meeting();
+                        meeting.setId(x.getId());
+                        meeting.setName(x.getName());
+                        meeting.setPlace(x.getPlace());
+                        meeting.setDescription(x.getDescription());
+                        meetings.add(meeting);
+                    });
+                    view.updateMeetingScroller();
+                }
             }
 
             @Override
@@ -57,8 +65,6 @@ public class MeetingScrollerPresender {
                 error(LOG_TAG, "getMeetings(): Throwable=" + t);
             }
         });
-
-
     }
 }
 
