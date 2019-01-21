@@ -70,4 +70,16 @@ public class CreateMeetingPresender {
             }
         });
     }
+
+    public void deleteMeeting(Meeting meeting){
+        ComeTogetherApp.getApi().deleteMeeting(meeting.getMeetingId()).enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {}
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                error(LOG_TAG, "deleteMeeting(): Throwable=" + t);
+            }
+        });
+    }
 }

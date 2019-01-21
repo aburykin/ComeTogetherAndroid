@@ -54,6 +54,7 @@ public class CreateMeeting extends AppCompatActivity {
     @Inject
     CreateMeetingPresender createMeetingPresender;
 
+    private Meeting meeting;
     private boolean visiableMenu = false;
 
     @Override
@@ -84,7 +85,7 @@ public class CreateMeeting extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(final Menu menu) {
-        if (visiableMenu){
+        if (visiableMenu) {
             menu.add(1, 1, 1, "Редактировать встречу");
             menu.add(1, 2, 2, "Удалить встречу");
         }
@@ -93,15 +94,13 @@ public class CreateMeeting extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        Intent intent;
         switch (item.getItemId()) {
             case 1:
-                // intent = new Intent(this, Authorization.class);
-                // startActivity(intent);
+                //  editMode()
                 break;
             case 2:
-                //  intent = new Intent(this, MeetingScroller.class);
-                //  startActivity(intent);
+                createMeetingPresender.deleteMeeting(meeting);
+                goToMeetingScroller();
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -143,8 +142,7 @@ public class CreateMeeting extends AppCompatActivity {
 
     private void setActivityToMode() {
         String action = getIntent().getAction();
-        Meeting meeting = getIntent().getParcelableExtra(Meeting.class.getCanonicalName());
-
+        this.meeting = getIntent().getParcelableExtra(Meeting.class.getCanonicalName());;
         if (action.equals(AppIntents.MEETING_CREATE)) {
             this.setTitle("Новая встреча");
             setAllEditableTrue();
@@ -163,7 +161,7 @@ public class CreateMeeting extends AppCompatActivity {
     }
 
 
-    private void fillDataFromIntent( Meeting meeting) {
+    private void fillDataFromIntent(Meeting meeting) {
         meetingName.setText(meeting.getName());
         meetingPlace.setText(meeting.getPlace());
     }
