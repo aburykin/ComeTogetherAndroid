@@ -1,6 +1,7 @@
 package ru.bur.cometogetherandroid.activities.meetingScroller;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,14 +11,16 @@ import android.widget.TextView;
 import java.util.List;
 
 import ru.bur.cometogetherandroid.R;
+import ru.bur.cometogetherandroid.activities.createMeeting.CreateMeeting;
+import ru.bur.cometogetherandroid.common.AppIntents;
 import ru.bur.cometogetherandroid.model.Meeting;
 
 
 public class MeetingScrollerRowAdapter extends BaseAdapter {
 
-    Context context;
-    LayoutInflater layoutInflater;
-    List<Meeting> meetings;
+    private Context context;
+    private LayoutInflater layoutInflater;
+    private List<Meeting> meetings;
 
     public MeetingScrollerRowAdapter(Context context, List<Meeting> meetings) {
         this.context = context;
@@ -59,6 +62,12 @@ public class MeetingScrollerRowAdapter extends BaseAdapter {
 //        meetingDate.setText(meeting.getDate().toString());
 //        meetingTime.setText(meeting.getTime().toString());
 //        amountParticipants.setText(meeting.getAmountParticipants().toString());
+
+        convertView.setOnClickListener(v -> {
+            Intent intent = new Intent(AppIntents.MEETING_SHOW);
+            intent.putExtra(Meeting.class.getCanonicalName(), meeting);
+            context.startActivity(intent);
+        });
 
         return convertView;
     }

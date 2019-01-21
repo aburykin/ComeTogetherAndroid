@@ -37,7 +37,15 @@
         <activity
             android:name=".activities.createMeeting.CreateMeeting"
             android:label="Создание встречи"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="ru.bur.cometogetherapp.intent.action.meeting.CREATE" />
+                <action android:name="ru.bur.cometogetherapp.intent.action.meeting.EDIT" />
+                <action android:name="ru.bur.cometogetherapp.intent.action.meeting.SHOW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".activities.showMeeting.ShowMeeting"
             android:label="Просмотр встречи"
@@ -46,8 +54,6 @@
             android:name=".activities.userProfile.UserProfile"
             android:label="Ваш профиль"
             android:screenOrientation="portrait" />
-
-
     </application>
 
 </manifest>

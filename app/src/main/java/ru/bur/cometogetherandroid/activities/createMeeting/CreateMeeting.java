@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.TimePicker;
@@ -21,6 +22,8 @@ import butterknife.ButterKnife;
 import ru.bur.cometogetherandroid.ComeTogetherApp;
 import ru.bur.cometogetherandroid.R;
 import ru.bur.cometogetherandroid.activities.meetingScroller.MeetingScroller;
+import ru.bur.cometogetherandroid.common.AppIntents;
+import ru.bur.cometogetherandroid.model.Meeting;
 import ru.bur.dto.MeetingDto;
 
 public class CreateMeeting extends AppCompatActivity {
@@ -55,11 +58,10 @@ public class CreateMeeting extends AppCompatActivity {
         setContentView(R.layout.create_meeting);
         ButterKnife.bind(this);
         ((ComeTogetherApp) getApplicationContext()).getAppComponent().inject(this);
-
         createMeetingPresender.attachView(this);
 
-        meetingDate.setOnClickListener(view -> showDialog(DIALOG_DATE));
-        meetingTime.setOnClickListener(view -> showDialog(DIALOG_TIME));
+        setActivityToMode();
+
         createNewMeeting.setOnClickListener(view -> {
             MeetingDto meetingDto = new MeetingDto();
             meetingDto.setName(meetingName.getText().toString());
@@ -67,8 +69,65 @@ public class CreateMeeting extends AppCompatActivity {
             meetingDto.setDescription(meetingDescription.getText().toString());
             createMeetingPresender.createMeeting(meetingDto);
         });
+    }
+
+    private void setActivityToMode() {
+        Intent intent = getIntent();
+        String action = intent.getAction();
+
+        if (action.equals(AppIntents.MEETING_CREATE)) {
+            this.setTitle("Новая встреча");
+            setAllEditableTrue();
+            createNewMeeting.setVisibility(View.VISIBLE);
+        } else if (action.equals(AppIntents.MEETING_EDIT)) {
+            this.setTitle("Редактировать встречу");
+            fillDataFromIntent(intent);
+            setAllEditableTrue();
+        } else if (action.equals(AppIntents.MEETING_SHOW)) {
+            this.setTitle("Просмотр встречи");
+            fillDataFromIntent(intent);
+            setAllEditableFalse();
+            createNewMeeting.setVisibility(View.GONE);
+        }
+    }
 
 
+    private void fillDataFromIntent(Intent intent) {
+        Meeting meeting = intent.getParcelableExtra(Meeting.class.getCanonicalName());
+        meetingName.setText(meeting.getName());
+        meetingPlace.setText(meeting.getPlace());
+    }
+
+    private void setAllEditableFalse() {
+        changeEditable(meetingName, false);
+        changeEditable(meetingPlace, false);
+        changeEditable(meetingDate, false);
+        changeEditable(meetingTime, false);
+        changeEditable(meetingDescription, false);
+        meetingDate.setOnClickListener(null);
+        meetingTime.setOnClickListener(null);
+    }
+
+    private void setAllEditableTrue() {
+        changeEditable(meetingName, true);
+        changeEditable(meetingPlace, true);
+        changeEditable(meetingDate, false);
+        changeEditable(meetingTime, false);
+        changeEditable(meetingDescription, true);
+        meetingDate.setOnClickListener(view -> showDialog(DIALOG_DATE));
+        meetingTime.setOnClickListener(view -> showDialog(DIALOG_TIME));
+
+    }
+
+    /**
+     * @param editText   - элемент над которым производим действие
+     * @param isEditable - сделать его редактируемым true, иначе false
+     */
+    private void changeEditable(TextInputEditText editText, boolean isEditable) {
+        editText.setClickable(isEditable);
+        editText.setCursorVisible(isEditable);
+        editText.setFocusable(isEditable);
+        editText.setFocusableInTouchMode(isEditable);
     }
 
 

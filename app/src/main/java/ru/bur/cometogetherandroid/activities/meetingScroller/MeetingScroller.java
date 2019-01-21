@@ -3,6 +3,7 @@ package ru.bur.cometogetherandroid.activities.meetingScroller;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.ListView;
 
@@ -17,6 +18,7 @@ import ru.bur.cometogetherandroid.ComeTogetherApp;
 import ru.bur.cometogetherandroid.R;
 import ru.bur.cometogetherandroid.activities.authorization.Authorization;
 import ru.bur.cometogetherandroid.activities.createMeeting.CreateMeeting;
+import ru.bur.cometogetherandroid.common.AppIntents;
 import ru.bur.cometogetherandroid.model.Meeting;
 
 public class MeetingScroller extends AppCompatActivity {
@@ -47,8 +49,7 @@ public class MeetingScroller extends AppCompatActivity {
         listView.setAdapter(meetingScrollerRowAdapter);
 
         addMeeting.setOnClickListener(view -> {
-            // Snackbar.make(view, "Here's a Snackbar", Snackbar.LENGTH_LONG).setAction("Action", null).show();
-            Intent intent = new Intent(view.getContext(), CreateMeeting.class);
+            Intent intent = new Intent(AppIntents.MEETING_CREATE);
             startActivity(intent);
         });
 
