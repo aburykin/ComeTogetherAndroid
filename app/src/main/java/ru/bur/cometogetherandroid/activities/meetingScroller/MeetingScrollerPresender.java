@@ -50,7 +50,7 @@ public class MeetingScrollerPresender {
                     List<MeetingDto> meetingDtos = response.body();
                     meetingDtos.forEach(x -> {
                         Meeting meeting = new Meeting();
-                        meeting.setId(x.getId());
+                        meeting.setMeetingId(x.getMeetingId());
                         meeting.setName(x.getName());
                         meeting.setPlace(x.getPlace());
                         meeting.setDescription(x.getDescription());

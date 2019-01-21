@@ -7,6 +7,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -52,6 +54,8 @@ public class CreateMeeting extends AppCompatActivity {
     @Inject
     CreateMeetingPresender createMeetingPresender;
 
+    private boolean visiableMenu = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,8 +64,6 @@ public class CreateMeeting extends AppCompatActivity {
         ((ComeTogetherApp) getApplicationContext()).getAppComponent().inject(this);
         createMeetingPresender.attachView(this);
 
-        setActivityToMode();
-
         createNewMeeting.setOnClickListener(view -> {
             MeetingDto meetingDto = new MeetingDto();
             meetingDto.setName(meetingName.getText().toString());
@@ -69,11 +71,79 @@ public class CreateMeeting extends AppCompatActivity {
             meetingDto.setDescription(meetingDescription.getText().toString());
             createMeetingPresender.createMeeting(meetingDto);
         });
+        setActivityToMode();
     }
 
+    public void setVisiableMenu() {
+        visiableMenu = true;
+    }
+
+    public void setUnvisiableMenu() {
+        visiableMenu = false;
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(final Menu menu) {
+        if (visiableMenu){
+            menu.add(1, 1, 1, "Редактировать встречу");
+            menu.add(1, 2, 2, "Удалить встречу");
+        }
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        Intent intent;
+        switch (item.getItemId()) {
+            case 1:
+                // intent = new Intent(this, Authorization.class);
+                // startActivity(intent);
+                break;
+            case 2:
+                //  intent = new Intent(this, MeetingScroller.class);
+                //  startActivity(intent);
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    protected Dialog onCreateDialog(int id) {
+        if (id == DIALOG_DATE) {
+            LocalDate localDate = LocalDate.now();
+            DatePickerDialog dateDialog = new DatePickerDialog(this, dateCallBackListener, localDate.getYear(), localDate.getMonthValue(), localDate.getDayOfMonth());
+            return dateDialog;
+        } else if (id == DIALOG_TIME) {
+            LocalTime localTime = LocalTime.now();
+            TimePickerDialog timeDialog = new TimePickerDialog(this, timeCallBackListener, localTime.getHour(), localTime.getMinute(), true);
+            return timeDialog;
+        }
+        return super.onCreateDialog(id);
+    }
+
+    DatePickerDialog.OnDateSetListener dateCallBackListener = new DatePickerDialog.OnDateSetListener() {
+        public void onDateSet(DatePicker view, int year, int monthOfYear,
+                              int dayOfMonth) {
+            meetingDate.setText(String.format("%d.%d.%d", dayOfMonth, monthOfYear, year));
+        }
+    };
+
+    TimePickerDialog.OnTimeSetListener timeCallBackListener = new TimePickerDialog.OnTimeSetListener() {
+        @Override
+        public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+            meetingTime.setText(String.format("%d:%d", hourOfDay, minute));
+        }
+    };
+
+
+    public void goToMeetingScroller() {
+        Intent intent = new Intent(this, MeetingScroller.class);
+        startActivity(intent);
+    }
+
+
     private void setActivityToMode() {
-        Intent intent = getIntent();
-        String action = intent.getAction();
+        String action = getIntent().getAction();
+        Meeting meeting = getIntent().getParcelableExtra(Meeting.class.getCanonicalName());
 
         if (action.equals(AppIntents.MEETING_CREATE)) {
             this.setTitle("Новая встреча");
@@ -81,19 +151,19 @@ public class CreateMeeting extends AppCompatActivity {
             createNewMeeting.setVisibility(View.VISIBLE);
         } else if (action.equals(AppIntents.MEETING_EDIT)) {
             this.setTitle("Редактировать встречу");
-            fillDataFromIntent(intent);
+            fillDataFromIntent(meeting);
             setAllEditableTrue();
         } else if (action.equals(AppIntents.MEETING_SHOW)) {
             this.setTitle("Просмотр встречи");
-            fillDataFromIntent(intent);
+            fillDataFromIntent(meeting);
             setAllEditableFalse();
             createNewMeeting.setVisibility(View.GONE);
         }
+        createMeetingPresender.setVisiableMenu(meeting);
     }
 
 
-    private void fillDataFromIntent(Intent intent) {
-        Meeting meeting = intent.getParcelableExtra(Meeting.class.getCanonicalName());
+    private void fillDataFromIntent( Meeting meeting) {
         meetingName.setText(meeting.getName());
         meetingPlace.setText(meeting.getPlace());
     }
@@ -129,39 +199,4 @@ public class CreateMeeting extends AppCompatActivity {
         editText.setFocusable(isEditable);
         editText.setFocusableInTouchMode(isEditable);
     }
-
-
-    protected Dialog onCreateDialog(int id) {
-        if (id == DIALOG_DATE) {
-            LocalDate localDate = LocalDate.now();
-            DatePickerDialog dateDialog = new DatePickerDialog(this, dateCallBackListener, localDate.getYear(), localDate.getMonthValue(), localDate.getDayOfMonth());
-            return dateDialog;
-        } else if (id == DIALOG_TIME) {
-            LocalTime localTime = LocalTime.now();
-            TimePickerDialog timeDialog = new TimePickerDialog(this, timeCallBackListener, localTime.getHour(), localTime.getMinute(), true);
-            return timeDialog;
-        }
-        return super.onCreateDialog(id);
-    }
-
-    DatePickerDialog.OnDateSetListener dateCallBackListener = new DatePickerDialog.OnDateSetListener() {
-        public void onDateSet(DatePicker view, int year, int monthOfYear,
-                              int dayOfMonth) {
-            meetingDate.setText(String.format("%d.%d.%d", dayOfMonth, monthOfYear, year));
-        }
-    };
-
-    TimePickerDialog.OnTimeSetListener timeCallBackListener = new TimePickerDialog.OnTimeSetListener() {
-        @Override
-        public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-            meetingTime.setText(String.format("%d:%d", hourOfDay, minute));
-        }
-    };
-
-
-    public void goToMeetingScroller() {
-        Intent intent = new Intent(this, MeetingScroller.class);
-        startActivity(intent);
-    }
-
 }

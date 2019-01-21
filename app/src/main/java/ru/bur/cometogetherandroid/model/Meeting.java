@@ -10,7 +10,7 @@ import lombok.Data;
 
 @Data
 public class Meeting implements Parcelable {
-    private Long id;
+    private long meetingId;
     private String name;
     private String place;
     private LocalDate date;
@@ -26,7 +26,7 @@ public class Meeting implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeLong(id);
+        dest.writeLong(meetingId);
         dest.writeString(name);
         dest.writeString(place);
         dest.writeString(description);
@@ -49,7 +49,7 @@ public class Meeting implements Parcelable {
     }
 
     private Meeting(Parcel in) {
-        id = in.readLong();
+        meetingId = in.readLong();
         name = in.readString();
         place = in.readString();
        // date = in.read(); // TODO

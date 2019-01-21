@@ -56,6 +56,7 @@ public class AutorizationPresender {
                 AppUserDto dto = response.body();
                 if (dto != null) {
                     cookies.set(CookiesEnum.token.toString(), dto.getAuthorizationToken());
+                    cookies.set(CookiesEnum.user_id.toString(), dto.getUserId().toString());
                     view.completeAuthorizationSuccess(dto.getAuthorizationToken());
                 } else {
                     view.completeAuthorizationFault("Авторизоваться не удалось, попробуйте позднее.");
@@ -69,7 +70,6 @@ public class AutorizationPresender {
                 view.completeAuthorizationFault("Авторизоваться не удалось: " + t.getLocalizedMessage()); //TODO
             }
         });
-
     }
 }
 // Пример синхронного вызов в retrofit

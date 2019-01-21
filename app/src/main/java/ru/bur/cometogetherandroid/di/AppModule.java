@@ -48,8 +48,8 @@ public class AppModule {
 
     @Provides
     @Singleton
-    CreateMeetingPresender createMeetingPresender() {
-        return new CreateMeetingPresender();
+    CreateMeetingPresender createMeetingPresender(Cookies cookies) {
+        return new CreateMeetingPresender(cookies);
     }
 
     @Provides
