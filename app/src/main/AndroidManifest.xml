@@ -40,7 +40,7 @@
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="ru.bur.cometogetherapp.intent.action.meeting.CREATE" />
-                <action android:name="ru.bur.cometogetherapp.intent.action.meeting.EDIT" />
+                <!--<action android:name="ru.bur.cometogetherapp.intent.action.meeting.EDIT" />-->
                 <action android:name="ru.bur.cometogetherapp.intent.action.meeting.SHOW" />
 
                 <category android:name="android.intent.category.DEFAULT" />

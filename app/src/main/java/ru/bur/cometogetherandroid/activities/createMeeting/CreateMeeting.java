@@ -48,14 +48,16 @@ public class CreateMeeting extends AppCompatActivity {
     @BindView(R.id.meetingDescription)
     TextInputEditText meetingDescription;
 
-    @BindView(R.id.createNewMeeting)
-    Button createNewMeeting;
+    @BindView(R.id.saveMeeting)
+    Button saveMeeting;
 
     @Inject
     CreateMeetingPresender createMeetingPresender;
 
     private Meeting meeting;
-    private boolean visiableMenu = false;
+    private int useMenuGroup = MenuGroup.INVISIBLE_MENU;
+
+    private boolean isOwner;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,29 +67,27 @@ public class CreateMeeting extends AppCompatActivity {
         ((ComeTogetherApp) getApplicationContext()).getAppComponent().inject(this);
         createMeetingPresender.attachView(this);
 
-        createNewMeeting.setOnClickListener(view -> {
+        saveMeeting.setOnClickListener(view -> {
             MeetingDto meetingDto = new MeetingDto();
+            meetingDto.setMeetingId(meeting.getMeetingId());
             meetingDto.setName(meetingName.getText().toString());
             meetingDto.setPlace(meetingPlace.getText().toString());
             meetingDto.setDescription(meetingDescription.getText().toString());
-            createMeetingPresender.createMeeting(meetingDto);
+            if (Long.valueOf(meeting.getMeetingId()) == null){
+                createMeetingPresender.createMeeting(meetingDto);
+            } else {
+                createMeetingPresender.updateMeeting(meetingDto);
+            }
+
         });
         setActivityToMode();
     }
 
-    public void setVisiableMenu() {
-        visiableMenu = true;
-    }
-
-    public void setUnvisiableMenu() {
-        visiableMenu = false;
-    }
-
     @Override
     public boolean onCreateOptionsMenu(final Menu menu) {
-        if (visiableMenu) {
-            menu.add(1, 1, 1, "Редактировать встречу");
-            menu.add(1, 2, 2, "Удалить встречу");
+        if (useMenuGroup == MenuGroup.VISIBLE_SHOW && isOwner) {
+            menu.add(MenuGroup.VISIBLE_SHOW, 1, 1, "Редактировать встречу");
+            menu.add(MenuGroup.VISIBLE_SHOW, 2, 2, "Удалить встречу");
         }
         return super.onCreateOptionsMenu(menu);
     }
@@ -96,7 +96,11 @@ public class CreateMeeting extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case 1:
-                //  editMode()
+                this.setTitle("Редактирование");
+                setAllEditableTrue();
+                saveMeeting.setVisibility(View.VISIBLE);
+                useMenuGroup = MenuGroup.VISIBLE_EDIT;
+                this.invalidateOptionsMenu();
                 break;
             case 2:
                 createMeetingPresender.deleteMeeting(meeting);
@@ -104,6 +108,10 @@ public class CreateMeeting extends AppCompatActivity {
                 break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    public void updateIsOwner(boolean value){
+        isOwner = value;
     }
 
     protected Dialog onCreateDialog(int id) {
@@ -119,47 +127,42 @@ public class CreateMeeting extends AppCompatActivity {
         return super.onCreateDialog(id);
     }
 
-    DatePickerDialog.OnDateSetListener dateCallBackListener = new DatePickerDialog.OnDateSetListener() {
-        public void onDateSet(DatePicker view, int year, int monthOfYear,
-                              int dayOfMonth) {
+    private DatePickerDialog.OnDateSetListener dateCallBackListener = new DatePickerDialog.OnDateSetListener() {
+        public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
             meetingDate.setText(String.format("%d.%d.%d", dayOfMonth, monthOfYear, year));
         }
     };
 
-    TimePickerDialog.OnTimeSetListener timeCallBackListener = new TimePickerDialog.OnTimeSetListener() {
+    private TimePickerDialog.OnTimeSetListener timeCallBackListener = new TimePickerDialog.OnTimeSetListener() {
         @Override
         public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
             meetingTime.setText(String.format("%d:%d", hourOfDay, minute));
         }
     };
 
-
     public void goToMeetingScroller() {
         Intent intent = new Intent(this, MeetingScroller.class);
         startActivity(intent);
     }
 
-
     private void setActivityToMode() {
         String action = getIntent().getAction();
-        this.meeting = getIntent().getParcelableExtra(Meeting.class.getCanonicalName());;
+        this.meeting = getIntent().getParcelableExtra(Meeting.class.getCanonicalName());
         if (action.equals(AppIntents.MEETING_CREATE)) {
             this.setTitle("Новая встреча");
             setAllEditableTrue();
-            createNewMeeting.setVisibility(View.VISIBLE);
-        } else if (action.equals(AppIntents.MEETING_EDIT)) {
-            this.setTitle("Редактировать встречу");
-            fillDataFromIntent(meeting);
-            setAllEditableTrue();
+            saveMeeting.setVisibility(View.VISIBLE);
+            useMenuGroup = MenuGroup.VISIBLE_CREATE;
         } else if (action.equals(AppIntents.MEETING_SHOW)) {
             this.setTitle("Просмотр встречи");
             fillDataFromIntent(meeting);
             setAllEditableFalse();
-            createNewMeeting.setVisibility(View.GONE);
+            saveMeeting.setVisibility(View.GONE);
+            createMeetingPresender.setVisiableMenu(meeting);
+            useMenuGroup = MenuGroup.VISIBLE_SHOW;
         }
-        createMeetingPresender.setVisiableMenu(meeting);
-    }
 
+    }
 
     private void fillDataFromIntent(Meeting meeting) {
         meetingName.setText(meeting.getName());

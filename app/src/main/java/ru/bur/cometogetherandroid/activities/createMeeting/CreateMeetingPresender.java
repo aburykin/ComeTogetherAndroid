@@ -40,7 +40,21 @@ public class CreateMeetingPresender {
             public void onResponse(Call<MeetingDto> call, Response<MeetingDto> response) {
                 debug(LOG_TAG, "createMeeting(): response=" + response);
                 MeetingDto dto = response.body();
-                System.out.println("response = " + dto);
+                view.goToMeetingScroller();
+            }
+
+            @Override
+            public void onFailure(Call<MeetingDto> call, Throwable t) {
+                error(LOG_TAG, "createMeeting(): Throwable=" + t);
+            }
+        });
+    }
+    public void updateMeeting(MeetingDto meetingDto) {
+        ComeTogetherApp.getApi().updateMeeting(meetingDto).enqueue(new Callback<MeetingDto>() {
+            @Override
+            public void onResponse(Call<MeetingDto> call, Response<MeetingDto> response) {
+                debug(LOG_TAG, "updateMeeting(): response=" + response);
+                MeetingDto dto = response.body();
                 view.goToMeetingScroller();
             }
 
@@ -51,17 +65,15 @@ public class CreateMeetingPresender {
         });
     }
 
+
+
     public void setVisiableMenu(Meeting meeting) {
         Long userId = Long.valueOf(cookies.get(CookiesEnum.user_id.toString()));
         ComeTogetherApp.getApi().getMeetingOwners(meeting.getMeetingId()).enqueue(new Callback<List<Long>>() {
             @Override
             public void onResponse(Call<List<Long>> call, Response<List<Long>> response) {
                 List<Long> owners = response.body();
-                if (owners.contains(userId)) {
-                    view.setVisiableMenu();
-                } else {
-                    view.setUnvisiableMenu();
-                }
+                view.updateIsOwner(owners.contains(userId));
             }
 
             @Override

@@ -9,6 +9,7 @@ import retrofit2.http.Body;
 import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Path;
 import ru.bur.dto.AppUserDto;
 import ru.bur.dto.AuthDto;
@@ -25,6 +26,9 @@ public interface ComeTogetherServerApi {
 
     @POST("/rest/meetings")
     Call<MeetingDto> createMeeting(@Body MeetingDto meetingDto);
+
+    @PUT("/rest/meetings")
+    Call<MeetingDto> updateMeeting(@Body MeetingDto meetingDto);
 
     @GET("/rest/meetings/{meetingId}/owners")
     Call<List<Long>> getMeetingOwners(@Path("meetingId") Long meetingId);
