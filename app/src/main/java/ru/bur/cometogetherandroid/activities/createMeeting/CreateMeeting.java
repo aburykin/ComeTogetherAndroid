@@ -53,6 +53,9 @@ public class CreateMeeting extends AppCompatActivity {
     @BindView(R.id.joinBtn)
     Button joinBtn;
 
+    @BindView(R.id.leaveBtn)
+    Button leaveBtn;
+
 
 
     @Inject
@@ -86,6 +89,11 @@ public class CreateMeeting extends AppCompatActivity {
         joinBtn.setOnClickListener(view -> {
             createMeetingPresender.addParticipant(meeting);
         });
+
+        leaveBtn.setOnClickListener(view -> {
+            createMeetingPresender.deleteParticipant(meeting);
+        });
+
     }
 
     @Override
@@ -194,15 +202,8 @@ public class CreateMeeting extends AppCompatActivity {
         this.useMenuGroup = useMenuGroup;
     }
 
-    void setOwner(boolean owner) {
-        isOwner = owner;
-    }
-
     void setMeeting(Meeting meeting) {
         this.meeting = meeting;
     }
 
-    public Meeting getMeeting() {
-        return meeting;
-    }
 }

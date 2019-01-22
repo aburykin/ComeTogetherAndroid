@@ -95,4 +95,12 @@
         android:text="Присоединиться"
         android:visibility="gone" />
 
+    <Button
+        android:id="@+id/leaveBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="Покинуть встречу"
+        android:visibility="gone" />
+
 </LinearLayout>

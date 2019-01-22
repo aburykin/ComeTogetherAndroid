@@ -45,4 +45,7 @@ public interface ComeTogetherServerApi {
     @POST("/rest/meetings/{meetingId}/participants/{appUserId}")
     Call<Void> addParticipant(@Path("meetingId") Long meetingId, @Path("appUserId") Long appUserId);
 
+    @DELETE("/rest/meetings/{meetingId}/participants/{appUserId}")
+    Call<Void> deleteParticipant(@Path("meetingId") Long meetingId, @Path("appUserId") Long appUserId);
+
 }
