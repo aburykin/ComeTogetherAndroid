@@ -10,7 +10,7 @@ import lombok.Data;
 
 @Data
 public class Meeting implements Parcelable {
-    private long meetingId;
+    private Long meetingId;
     private String name;
     private String place;
     private LocalDate date;

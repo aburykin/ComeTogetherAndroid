@@ -24,7 +24,6 @@ import butterknife.ButterKnife;
 import ru.bur.cometogetherandroid.ComeTogetherApp;
 import ru.bur.cometogetherandroid.R;
 import ru.bur.cometogetherandroid.activities.meetingScroller.MeetingScroller;
-import ru.bur.cometogetherandroid.common.AppIntents;
 import ru.bur.cometogetherandroid.model.Meeting;
 import ru.bur.dto.MeetingDto;
 
@@ -56,7 +55,6 @@ public class CreateMeeting extends AppCompatActivity {
 
     private Meeting meeting;
     private int useMenuGroup = MenuGroup.INVISIBLE_MENU;
-
     private boolean isOwner;
 
     @Override
@@ -66,21 +64,19 @@ public class CreateMeeting extends AppCompatActivity {
         ButterKnife.bind(this);
         ((ComeTogetherApp) getApplicationContext()).getAppComponent().inject(this);
         createMeetingPresender.attachView(this);
-
+        createMeetingPresender.tuneActivityMode();
         saveMeeting.setOnClickListener(view -> {
             MeetingDto meetingDto = new MeetingDto();
             meetingDto.setMeetingId(meeting.getMeetingId());
             meetingDto.setName(meetingName.getText().toString());
             meetingDto.setPlace(meetingPlace.getText().toString());
             meetingDto.setDescription(meetingDescription.getText().toString());
-            if (Long.valueOf(meeting.getMeetingId()) == null){
+            if (meeting.getMeetingId() == null) {
                 createMeetingPresender.createMeeting(meetingDto);
             } else {
                 createMeetingPresender.updateMeeting(meetingDto);
             }
-
         });
-        setActivityToMode();
     }
 
     @Override
@@ -110,8 +106,9 @@ public class CreateMeeting extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void updateIsOwner(boolean value){
+    void updateIsOwner(boolean value) {
         isOwner = value;
+        invalidateOptionsMenu();
     }
 
     protected Dialog onCreateDialog(int id) {
@@ -140,36 +137,18 @@ public class CreateMeeting extends AppCompatActivity {
         }
     };
 
-    public void goToMeetingScroller() {
+    void goToMeetingScroller() {
         Intent intent = new Intent(this, MeetingScroller.class);
         startActivity(intent);
     }
 
-    private void setActivityToMode() {
-        String action = getIntent().getAction();
-        this.meeting = getIntent().getParcelableExtra(Meeting.class.getCanonicalName());
-        if (action.equals(AppIntents.MEETING_CREATE)) {
-            this.setTitle("Новая встреча");
-            setAllEditableTrue();
-            saveMeeting.setVisibility(View.VISIBLE);
-            useMenuGroup = MenuGroup.VISIBLE_CREATE;
-        } else if (action.equals(AppIntents.MEETING_SHOW)) {
-            this.setTitle("Просмотр встречи");
-            fillDataFromIntent(meeting);
-            setAllEditableFalse();
-            saveMeeting.setVisibility(View.GONE);
-            createMeetingPresender.setVisiableMenu(meeting);
-            useMenuGroup = MenuGroup.VISIBLE_SHOW;
-        }
 
-    }
-
-    private void fillDataFromIntent(Meeting meeting) {
+    void fillDataFromIntent(Meeting meeting) {
         meetingName.setText(meeting.getName());
         meetingPlace.setText(meeting.getPlace());
     }
 
-    private void setAllEditableFalse() {
+    void setAllEditableFalse() {
         changeEditable(meetingName, false);
         changeEditable(meetingPlace, false);
         changeEditable(meetingDate, false);
@@ -179,7 +158,7 @@ public class CreateMeeting extends AppCompatActivity {
         meetingTime.setOnClickListener(null);
     }
 
-    private void setAllEditableTrue() {
+    void setAllEditableTrue() {
         changeEditable(meetingName, true);
         changeEditable(meetingPlace, true);
         changeEditable(meetingDate, false);
@@ -199,5 +178,21 @@ public class CreateMeeting extends AppCompatActivity {
         editText.setCursorVisible(isEditable);
         editText.setFocusable(isEditable);
         editText.setFocusableInTouchMode(isEditable);
+    }
+
+    void setUseMenuGroup(int useMenuGroup) {
+        this.useMenuGroup = useMenuGroup;
+    }
+
+    void setOwner(boolean owner) {
+        isOwner = owner;
+    }
+
+    void setMeeting(Meeting meeting) {
+        this.meeting = meeting;
+    }
+
+    public Meeting getMeeting() {
+        return meeting;
     }
 }
