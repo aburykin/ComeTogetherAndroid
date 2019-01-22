@@ -81,10 +81,18 @@
     </android.support.design.widget.TextInputLayout>
 
     <Button
-        android:id="@+id/saveMeeting"
+        android:id="@+id/saveBtn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:text="Сохранить" />
+
+    <Button
+        android:id="@+id/joinBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="Присоединиться"
+        android:visibility="gone" />
 
 </LinearLayout>

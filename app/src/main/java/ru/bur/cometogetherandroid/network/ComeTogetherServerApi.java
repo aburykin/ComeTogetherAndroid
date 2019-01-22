@@ -30,10 +30,19 @@ public interface ComeTogetherServerApi {
     @PUT("/rest/meetings")
     Call<MeetingDto> updateMeeting(@Body MeetingDto meetingDto);
 
+    @GET("/rest/meetings/{meetingId}")
+    Call<MeetingDto> getMeeting(@Path("meetingId") Long meetingId);
+
     @GET("/rest/meetings/{meetingId}/owners")
     Call<List<Long>> getMeetingOwners(@Path("meetingId") Long meetingId);
 
+    @GET("/rest/meetings/{meetingId}/participants")
+    Call<List<Long>> getMeetingParticipants(@Path("meetingId") Long meetingId);
+
     @DELETE("/rest/meetings/{meetingId}")
     Call<Void> deleteMeeting(@Path("meetingId") Long meetingId);
+
+    @POST("/rest/meetings/{meetingId}/participants/{appUserId}")
+    Call<Void> addParticipant(@Path("meetingId") Long meetingId, @Path("appUserId") Long appUserId);
 
 }

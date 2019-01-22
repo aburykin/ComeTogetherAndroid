@@ -36,6 +36,10 @@ public class  Cookies {
         set(CookiesEnum.os.getName(), "android");
     }
 
+    public Long getUserId(){
+        return Long.valueOf(get(CookiesEnum.user_id.toString()));
+    }
+
 
 }
 
