@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="ru.bur.cometogetherandroid">
+    package="ru.bur.lifeofflineandroid">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.NE" />
 
     <application
-        android:name=".ComeTogetherApp"
+        android:name="ru.bur.lifeofflineandroid.LifeOfflineApp"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -17,8 +17,8 @@
         android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning">
         <activity
-            android:name=".activities.authorization.Authorization"
-            android:label="Come together"
+            android:name="ru.bur.lifeofflineandroid.activities.authorization.Authorization"
+            android:label="Life Offline"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -27,31 +27,30 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activities.meetingScroller.MeetingScroller"
+            android:name="ru.bur.lifeofflineandroid.activities.meetingScroller.MeetingScroller"
             android:label="@string/title_activity_meeting_scroller"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activities.participants.Participants"
+            android:name="ru.bur.lifeofflineandroid.activities.participants.Participants"
             android:label="Участники встречи"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activities.createMeeting.CreateMeeting"
+            android:name="ru.bur.lifeofflineandroid.activities.createMeeting.CreateMeeting"
             android:label="Создание встречи"
             android:screenOrientation="portrait">
             <intent-filter>
-                <action android:name="ru.bur.cometogetherapp.intent.action.meeting.CREATE" />
-                <!--<action android:name="ru.bur.cometogetherapp.intent.action.meeting.EDIT" />-->
-                <action android:name="ru.bur.cometogetherapp.intent.action.meeting.SHOW" />
+                <action android:name="ru.bur.lifeoffline.intent.action.meeting.CREATE" />
+                <action android:name="ru.bur.lifeoffline.intent.action.meeting.SHOW" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
         <activity
-            android:name=".activities.showMeeting.ShowMeeting"
+            android:name="ru.bur.lifeofflineandroid.activities.showMeeting.ShowMeeting"
             android:label="Просмотр встречи"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activities.userProfile.UserProfile"
+            android:name="ru.bur.lifeofflineandroid.activities.userProfile.UserProfile"
             android:label="Ваш профиль"
             android:screenOrientation="portrait" />
     </application>
