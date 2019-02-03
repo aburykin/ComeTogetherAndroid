@@ -3,7 +3,12 @@ package ru.bur.lifeofflineandroid.activities.meetingScroller;
 import org.springframework.http.HttpStatus;
 
 import java.sql.Timestamp;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.List;
+import java.util.TimeZone;
 
 import javax.inject.Inject;
 
@@ -13,13 +18,14 @@ import retrofit2.Response;
 import ru.bur.lifeofflineandroid.LifeOfflineApp;
 import ru.bur.lifeofflineandroid.common.Cookies;
 import ru.bur.lifeofflineandroid.common.CookiesEnum;
+import ru.bur.lifeofflineandroid.model.MapperMeetingDto;
 import ru.bur.lifeofflineandroid.model.Meeting;
 import ru.bur.dto.MeetingDto;
 import ru.bur.lifeofflineandroid.util.MainLogger;
 
 public class MeetingScrollerPresender {
 
-    private String LOG_TAG = "MeetingScrollerPresender";
+    private String LOG_TAG = this.getClass().getName();
     private MeetingScroller view;
     private Cookies cookies;
 
@@ -47,19 +53,8 @@ public class MeetingScrollerPresender {
                     }
                 } else {
                     List<MeetingDto> meetingDtos = response.body();
-                    meetingDtos.forEach(x -> {
-                        Meeting meeting = new Meeting();
-                        meeting.setMeetingId(x.getMeetingId());
-                        meeting.setName(x.getName());
-                        meeting.setPlace(x.getPlace());
-
-                        Timestamp datetime = x.getStartDate();
-
-                      //  LocalDate.
-
-                     //   meeting.setDate();
-                     //   meeting.setTime(x.get);
-                        meeting.setDescription(x.getDescription());
+                    meetingDtos.forEach(dto -> {
+                        Meeting meeting = MapperMeetingDto.toModel(dto);
                         meetings.add(meeting);
                     });
                     view.updateMeetingScroller();
@@ -73,9 +68,3 @@ public class MeetingScrollerPresender {
         });
     }
 }
-
-     /*   for (int i = 0; i < 3; i++) {
-            meetings.add(new Meeting("Волейбол с друзьями", "Площадка во дворе", LocalDate.of(2018, 11, 5), LocalTime.of(18, 0), i));
-        }
-        return meetings;
-        */

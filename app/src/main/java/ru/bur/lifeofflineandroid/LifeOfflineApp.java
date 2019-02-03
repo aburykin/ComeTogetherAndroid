@@ -17,6 +17,7 @@ public class LifeOfflineApp extends Application {
     private static LifeOfflineServerApi serverApi;
     private Retrofit retrofit;
     private String baseUrl = "http://192.168.0.102:8080";
+   // private String baseUrl = "http://192.168.0.86:8080";
     private AppComponent appComponent;
 
     @Override

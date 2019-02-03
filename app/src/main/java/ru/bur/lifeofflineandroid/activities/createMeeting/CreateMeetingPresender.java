@@ -14,6 +14,7 @@ import retrofit2.Response;
 import ru.bur.lifeofflineandroid.LifeOfflineApp;
 import ru.bur.lifeofflineandroid.common.AppIntents;
 import ru.bur.lifeofflineandroid.common.Cookies;
+import ru.bur.lifeofflineandroid.model.MapperMeetingDto;
 import ru.bur.lifeofflineandroid.model.Meeting;
 import ru.bur.dto.MeetingDto;
 import ru.bur.lifeofflineandroid.util.MainLogger;
@@ -153,15 +154,7 @@ public class CreateMeetingPresender {
             @Override
             public void onResponse(Call<MeetingDto> call, Response<MeetingDto> response) {
                 MeetingDto meetingDto = response.body();
-                Meeting meeting = new Meeting();
-
-                meeting.setMeetingId(meetingDto.getMeetingId());
-                meeting.setName(meetingDto.getName());
-                meeting.setPlace(meetingDto.getPlace());
-                //meeting.setDate(meetingDto.get());
-                //meeting.setTime(meetingDto.get());
-                meeting.setDescription(meetingDto.getDescription());
-                //meeting.setAmountParticipants(meetingDto.get());
+                Meeting meeting =  MapperMeetingDto.toModel(meetingDto);
 
                 view.setMeeting(meeting);
                 view.fillDataFromIntent(meeting);

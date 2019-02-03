@@ -14,8 +14,15 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.TimePicker;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.ZoneId;
+import java.time.ZoneOffset;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 
 import javax.inject.Inject;
 
@@ -25,6 +32,7 @@ import ru.bur.dto.MeetingDto;
 import ru.bur.lifeofflineandroid.LifeOfflineApp;
 import ru.bur.lifeofflineandroid.R;
 import ru.bur.lifeofflineandroid.activities.meetingScroller.MeetingScroller;
+import ru.bur.lifeofflineandroid.model.MapperMeetingDto;
 import ru.bur.lifeofflineandroid.model.Meeting;
 
 public class CreateMeeting extends AppCompatActivity {
@@ -73,11 +81,16 @@ public class CreateMeeting extends AppCompatActivity {
         createMeetingPresender.attachView(this);
         createMeetingPresender.tuneActivityMode();
         saveBtn.setOnClickListener(view -> {
-            MeetingDto meetingDto = new MeetingDto();
-            meetingDto.setMeetingId(meeting.getMeetingId());
-            meetingDto.setName(meetingName.getText().toString());
-            meetingDto.setPlace(meetingPlace.getText().toString());
-            meetingDto.setDescription(meetingDescription.getText().toString());
+            Meeting meetingForShow = new Meeting();
+            meetingForShow.setMeetingId(meeting.getMeetingId());
+            meetingForShow.setName(meetingName.getText().toString());
+            meetingForShow.setPlace(meetingPlace.getText().toString());
+            DateTimeFormatter formatterDate = DateTimeFormatter.ofPattern("d.M.y");
+            DateTimeFormatter formatterTime = DateTimeFormatter.ofPattern("H:m");
+            meetingForShow.setDate(LocalDate.parse(meetingDate.getText(), formatterDate));
+            meetingForShow.setTime(LocalTime.parse(meetingTime.getText(), formatterTime));
+            meetingForShow.setDescription(meetingDescription.getText().toString());
+            MeetingDto meetingDto  =  MapperMeetingDto.toDto(meetingForShow);
             if (meeting.getMeetingId() == null) {
                 createMeetingPresender.createMeeting(meetingDto);
             } else {
@@ -92,8 +105,9 @@ public class CreateMeeting extends AppCompatActivity {
         leaveBtn.setOnClickListener(view -> {
             createMeetingPresender.deleteParticipant(meeting);
         });
-
     }
+
+
 
     @Override
     public boolean onCreateOptionsMenu(final Menu menu) {
@@ -163,6 +177,11 @@ public class CreateMeeting extends AppCompatActivity {
     void fillDataFromIntent(Meeting meeting) {
         meetingName.setText(meeting.getName());
         meetingPlace.setText(meeting.getPlace());
+        DateTimeFormatter formatterDate = DateTimeFormatter.ofPattern("d.M.y");
+        DateTimeFormatter formatterTime = DateTimeFormatter.ofPattern("H:m");
+        meetingDate.setText( meeting.getDate().format(formatterDate));
+        meetingTime.setText(meeting.getTime().format(formatterTime));
+        meetingDescription.setText(meeting.getDescription());
     }
 
     void setAllEditableFalse() {
