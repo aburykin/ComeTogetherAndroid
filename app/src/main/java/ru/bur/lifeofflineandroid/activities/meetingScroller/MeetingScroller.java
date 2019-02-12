@@ -51,6 +51,7 @@ public class MeetingScroller extends AppCompatActivity {
             startActivity(intent);
         });
 
+        presender.getMeetingsFromDB(meetings);
         presender.getMeetings(meetings);
 
     }

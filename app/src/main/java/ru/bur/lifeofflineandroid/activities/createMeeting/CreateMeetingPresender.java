@@ -14,6 +14,8 @@ import retrofit2.Response;
 import ru.bur.lifeofflineandroid.LifeOfflineApp;
 import ru.bur.lifeofflineandroid.common.AppIntents;
 import ru.bur.lifeofflineandroid.common.Cookies;
+import ru.bur.lifeofflineandroid.dao.ObjectBox;
+import ru.bur.lifeofflineandroid.dao.objectBox.ObjectBoxImpl;
 import ru.bur.lifeofflineandroid.model.MapperMeetingDto;
 import ru.bur.lifeofflineandroid.model.Meeting;
 import ru.bur.dto.MeetingDto;
@@ -24,17 +26,23 @@ public class CreateMeetingPresender {
     private String LOG_TAG = "CreateMeetingPresender";
     private CreateMeeting view;
     private Cookies cookies;
-
+    private ObjectBox objectBox;
     @Inject
-    public CreateMeetingPresender(Cookies cookies) {
+    public CreateMeetingPresender(Cookies cookies, ObjectBox objectBox) {
         this.cookies = cookies;
+        this.objectBox =objectBox;
     }
 
     void attachView(CreateMeeting activity) {
         view = activity;
     }
 
+
+
     public void createMeeting(MeetingDto meetingDto) {
+
+        objectBox.create( MapperMeetingDto.toModel(meetingDto));
+
         LifeOfflineApp.getApi().createMeeting(meetingDto).enqueue(new Callback<MeetingDto>() {
             @Override
             public void onResponse(Call<MeetingDto> call, Response<MeetingDto> response) {

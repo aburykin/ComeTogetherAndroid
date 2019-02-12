@@ -1,7 +1,8 @@
 plugins {
     id 'io.franzbecker.gradle-lombok' version '1.14'
-    id 'com.android.application'
 }
+apply plugin: 'com.android.application'
+apply plugin: 'io.objectbox'
 
 android {
     compileSdkVersion 28
@@ -84,6 +85,7 @@ dependencies {
     implementation 'com.android.support:design:28.0.0'
     implementation 'ru.bur.life-offline:life-offline-api:0.0.1-SNAPSHOT'
 
+    implementation "io.objectbox:objectbox-rxjava:$objectboxVersion"
 }
 
 repositories {

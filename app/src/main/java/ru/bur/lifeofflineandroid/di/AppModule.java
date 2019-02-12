@@ -1,6 +1,7 @@
 package ru.bur.lifeofflineandroid.di;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 
 import javax.inject.Singleton;
 
@@ -10,6 +11,8 @@ import ru.bur.lifeofflineandroid.activities.authorization.AutorizationPresender;
 import ru.bur.lifeofflineandroid.activities.createMeeting.CreateMeetingPresender;
 import ru.bur.lifeofflineandroid.activities.meetingScroller.MeetingScrollerPresender;
 import ru.bur.lifeofflineandroid.common.Cookies;
+import ru.bur.lifeofflineandroid.dao.ObjectBox;
+import ru.bur.lifeofflineandroid.dao.objectBox.ObjectBoxImpl;
 import ru.bur.lifeofflineandroid.network.AddCookiesInterceptor;
 
 @Module
@@ -41,14 +44,14 @@ public class AppModule {
 
     @Provides
     @Singleton
-    MeetingScrollerPresender meetingScrollerPresender(Cookies cookies) {
-        return new MeetingScrollerPresender(cookies);
+    MeetingScrollerPresender meetingScrollerPresender(Cookies cookies, ObjectBox objectBox) {
+        return new MeetingScrollerPresender(cookies, objectBox);
     }
 
     @Provides
     @Singleton
-    CreateMeetingPresender createMeetingPresender(Cookies cookies) {
-        return new CreateMeetingPresender(cookies);
+    CreateMeetingPresender createMeetingPresender(Cookies cookies, ObjectBox objectBox) {
+        return new CreateMeetingPresender(cookies, objectBox);
     }
 
     @Provides
@@ -57,7 +60,12 @@ public class AppModule {
         return new AddCookiesInterceptor(cookies);
     }
 
-
+    @Singleton
+    @NonNull
+    @Provides
+    ObjectBox objectBox() {
+        return new ObjectBoxImpl(mainContext);
+    }
 
 
 }

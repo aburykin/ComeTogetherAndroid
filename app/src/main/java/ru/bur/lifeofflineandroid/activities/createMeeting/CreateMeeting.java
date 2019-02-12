@@ -14,14 +14,8 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.TimePicker;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.time.ZoneId;
-import java.time.ZoneOffset;
-import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 
 import javax.inject.Inject;
@@ -87,11 +81,11 @@ public class CreateMeeting extends AppCompatActivity {
             meetingForShow.setPlace(meetingPlace.getText().toString());
             DateTimeFormatter formatterDate = DateTimeFormatter.ofPattern("d.M.y");
             DateTimeFormatter formatterTime = DateTimeFormatter.ofPattern("H:m");
-            meetingForShow.setDate(LocalDate.parse(meetingDate.getText(), formatterDate));
-            meetingForShow.setTime(LocalTime.parse(meetingTime.getText(), formatterTime));
+            meetingForShow.setDate(LocalDate.parse(meetingDate.getText(), formatterDate)); //TODO не проверяю заполнение ошибка
+            meetingForShow.setTime(LocalTime.parse(meetingTime.getText(), formatterTime)); //TODO не проверяю заполнение ошибка
             meetingForShow.setDescription(meetingDescription.getText().toString());
-            MeetingDto meetingDto  =  MapperMeetingDto.toDto(meetingForShow);
-            if (meeting.getMeetingId() == null) {
+            MeetingDto meetingDto = MapperMeetingDto.toDto(meetingForShow);
+            if (meeting.getMeetingId() == 0L) {
                 createMeetingPresender.createMeeting(meetingDto);
             } else {
                 createMeetingPresender.updateMeeting(meetingDto);
@@ -106,7 +100,6 @@ public class CreateMeeting extends AppCompatActivity {
             createMeetingPresender.deleteParticipant(meeting);
         });
     }
-
 
 
     @Override
@@ -179,7 +172,7 @@ public class CreateMeeting extends AppCompatActivity {
         meetingPlace.setText(meeting.getPlace());
         DateTimeFormatter formatterDate = DateTimeFormatter.ofPattern("d.M.y");
         DateTimeFormatter formatterTime = DateTimeFormatter.ofPattern("H:m");
-        meetingDate.setText( meeting.getDate().format(formatterDate));
+        meetingDate.setText(meeting.getDate().format(formatterDate));
         meetingTime.setText(meeting.getTime().format(formatterTime));
         meetingDescription.setText(meeting.getDescription());
     }

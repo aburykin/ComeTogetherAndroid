@@ -6,17 +6,24 @@ import android.os.Parcelable;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
+import io.objectbox.annotation.Entity;
+import io.objectbox.annotation.Id;
+import io.objectbox.annotation.Transient;
 import lombok.Data;
 
 @Data
+@Entity
 public class Meeting implements Parcelable {
-    private Long meetingId;
-    private String name;
-    private String place;
-    private LocalDate date;
-    private LocalTime time;
-    private String description;
-    private int amountParticipants;
+    @Id
+    public long meetingId;
+    public String name;
+    public String place;
+    @Transient
+    public LocalDate date;
+    @Transient
+    public LocalTime time;
+    public String description;
+    public int amountParticipants;
 
 
     @Override
@@ -44,7 +51,7 @@ public class Meeting implements Parcelable {
         }
     };
 
-    public Meeting(){
+    public Meeting() {
 
     }
 
@@ -52,8 +59,8 @@ public class Meeting implements Parcelable {
         meetingId = in.readLong();
         name = in.readString();
         place = in.readString();
-       // date = in.read(); // TODO
-       // time = in.read();
+        // date = in.read(); // TODO
+        // time = in.read();
         description = in.readString();
         amountParticipants = in.readInt();
     }
