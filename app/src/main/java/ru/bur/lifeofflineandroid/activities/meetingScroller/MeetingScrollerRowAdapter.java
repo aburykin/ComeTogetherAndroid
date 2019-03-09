@@ -8,6 +8,8 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import ru.bur.lifeofflineandroid.R;
@@ -59,8 +61,12 @@ public class MeetingScrollerRowAdapter extends BaseAdapter {
         meetingId.setText(String.valueOf(meeting.getMeetingId()));
         meetingName.setText(meeting.getName());
         meetingPlace.setText(meeting.getPlace());
-  //      meetingDate.setText(meeting.getDate().toString());
-  //      meetingTime.setText(meeting.getTime().toString());
+
+        DateTimeFormatter formatDate = DateTimeFormatter.ofPattern("dd.MM.yyyy");
+        DateTimeFormatter timeFormat = DateTimeFormatter.ofPattern("HH:mm");
+
+        meetingDate.setText(formatDate.format(meeting.getDate()));
+        meetingTime.setText(timeFormat.format(meeting.getTime()));
 //        amountParticipants.setText(meeting.getAmountParticipants().toString());
 
         convertView.setOnClickListener(v -> {

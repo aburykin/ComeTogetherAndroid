@@ -58,7 +58,6 @@ public class MeetingScroller extends AppCompatActivity {
             Intent intent = new Intent(AppIntents.MEETING_CREATE);
             startActivity(intent);
         });
-
         listView.setOnScrollListener(new AbsListView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(AbsListView view, int scrollState) {
@@ -79,7 +78,6 @@ public class MeetingScroller extends AppCompatActivity {
                 //we don't need this method, so we leave it empty
             }
         });
-
         presender.getFirstNmeatings(meetingsList);
 
     }
