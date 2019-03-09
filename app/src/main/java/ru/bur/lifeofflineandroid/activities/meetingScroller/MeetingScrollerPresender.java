@@ -2,25 +2,19 @@ package ru.bur.lifeofflineandroid.activities.meetingScroller;
 
 import org.springframework.http.HttpStatus;
 
-import java.sql.Timestamp;
-import java.time.Instant;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
 import java.util.List;
-import java.util.TimeZone;
 
 import javax.inject.Inject;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import ru.bur.dto.MeetingDto;
 import ru.bur.lifeofflineandroid.LifeOfflineApp;
 import ru.bur.lifeofflineandroid.common.Cookies;
 import ru.bur.lifeofflineandroid.common.CookiesEnum;
 import ru.bur.lifeofflineandroid.model.MapperMeetingDto;
 import ru.bur.lifeofflineandroid.model.Meeting;
-import ru.bur.dto.MeetingDto;
 import ru.bur.lifeofflineandroid.util.MainLogger;
 
 public class MeetingScrollerPresender {
@@ -38,16 +32,16 @@ public class MeetingScrollerPresender {
         view = activity;
     }
 
-    public void getMeetings(List<Meeting> meetings) {
-
-        LifeOfflineApp.getApi().getAllMeetings().enqueue(new Callback<List<MeetingDto>>() {
+    public void getFirstNmeatings(List<Meeting> meetings) {
+        meetings.clear();
+        LifeOfflineApp.getApi().getFirstNmeatings().enqueue(new Callback<List<MeetingDto>>() {
             @Override
             public void onResponse(Call<List<MeetingDto>> call, Response<List<MeetingDto>> response) {
-                MainLogger.debug(LOG_TAG, "getMeetings(): response=" + response);
+                MainLogger.debug(LOG_TAG, "getFirstNmeatings(): response=" + response);
 
                 // если не авторизован, то вернуться на страницу авторизации.
-                if ( response.isSuccessful() == false){
-                    if ( response.code() == HttpStatus.UNAUTHORIZED.value()){
+                if (response.isSuccessful() == false) {
+                    if (response.code() == HttpStatus.UNAUTHORIZED.value()) {
                         cookies.set(CookiesEnum.token.toString(), null);
                         view.goToAuthorization();
                     }
@@ -63,8 +57,57 @@ public class MeetingScrollerPresender {
 
             @Override
             public void onFailure(Call<List<MeetingDto>> call, Throwable t) {
-                MainLogger.error(LOG_TAG, "getMeetings(): Throwable=" + t);
+                MainLogger.error(LOG_TAG, "getFirstNmeatings(): Throwable=" + t);
             }
         });
     }
+
+    public void getNextMeetings(List<Meeting> currMeetings, MeetingDto lastMeetingDto) {
+        LifeOfflineApp.getApi().getNextMeetings(lastMeetingDto).enqueue(new Callback<List<MeetingDto>>() {
+            @Override
+            public void onResponse(Call<List<MeetingDto>> call, Response<List<MeetingDto>> response) {
+                MainLogger.debug(LOG_TAG, "getNextMeetings(): response=" + response);
+
+                // если не авторизован, то вернуться на страницу авторизации.
+                if (response.isSuccessful() == false) {
+                    if (response.code() == HttpStatus.UNAUTHORIZED.value()) {
+                        cookies.set(CookiesEnum.token.toString(), null);
+                        view.goToAuthorization();
+                    }
+                } else {
+                    List<MeetingDto> nextMeetingDtos = response.body();
+                    mergeNextMeetings(currMeetings, nextMeetingDtos);
+                    view.updateMeetingScroller();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<MeetingDto>> call, Throwable t) {
+                MainLogger.error(LOG_TAG, "getNextMeetings(): Throwable=" + t);
+            }
+        });
+    }
+
+
+    private void mergeNextMeetings(List<Meeting> currMeetings, List<MeetingDto> nextMeetingDtos) {
+        nextMeetingDtos.stream().forEach(dto -> {
+            Meeting meeting = MapperMeetingDto.toModel(dto);
+            if (currMeetings.stream().anyMatch(curr -> curr.getMeetingId().equals(meeting.getMeetingId()))) { //REPLACE
+                for (Meeting curr : currMeetings) {
+                    if (curr.getMeetingId().equals(meeting.getMeetingId())) {
+                        int index = currMeetings.indexOf(curr);
+                        currMeetings.remove(index);
+                        currMeetings.add(index, meeting);
+                        break;
+                    }
+                }
+            } else {
+                currMeetings.add(meeting);
+            }
+
+        });
+
+
+    }
+
 }

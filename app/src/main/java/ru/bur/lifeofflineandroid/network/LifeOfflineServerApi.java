@@ -22,7 +22,10 @@ public interface LifeOfflineServerApi {
 
     @SerializedName("meetings")
     @GET("/rest/meetings")
-    Call<List<MeetingDto>> getAllMeetings();
+    Call<List<MeetingDto>> getFirstNmeatings();
+
+    @POST("/rest/meetings/next")
+    Call<List<MeetingDto>> getNextMeetings(@Body MeetingDto meetingDto);
 
     @POST("/rest/meetings")
     Call<MeetingDto> createMeeting(@Body MeetingDto meetingDto);
