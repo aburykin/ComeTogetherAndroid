@@ -1,5 +1,7 @@
 package ru.bur.lifeofflineandroid.activities.meetingScroller;
 
+import android.view.View;
+
 import org.springframework.http.HttpStatus;
 
 import java.util.List;
@@ -52,6 +54,7 @@ public class MeetingScrollerPresender {
                         meetings.add(meeting);
                     });
                     view.updateMeetingScroller();
+                    view.progressBar.setVisibility(View.GONE);
                 }
             }
 
@@ -78,6 +81,7 @@ public class MeetingScrollerPresender {
                     List<MeetingDto> nextMeetingDtos = response.body();
                     mergeNextMeetings(currMeetings, nextMeetingDtos);
                     view.updateMeetingScroller();
+                    view.progressBar.setVisibility(View.GONE);
                 }
             }
 

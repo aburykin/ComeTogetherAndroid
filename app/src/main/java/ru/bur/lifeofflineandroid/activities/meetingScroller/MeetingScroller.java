@@ -4,8 +4,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.widget.AbsListView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,6 +30,10 @@ public class MeetingScroller extends AppCompatActivity {
 
     @BindView(R.id.addMeeting)
     FloatingActionButton addMeeting;
+
+    @BindView(R.id.progressBar)
+    ProgressBar progressBar;
+
 
     @Inject
     public MeetingScrollerPresender presender;
@@ -59,16 +65,12 @@ public class MeetingScroller extends AppCompatActivity {
                 System.out.println();
                 if (scrollState == SCROLL_STATE_IDLE
                         && listView.getLastVisiblePosition() == meetingsList.size() - 1) {
-                    //  progressBar.setVisibility(View.VISIBLE);
-                    Meeting meeting = (Meeting)meetingScrollerRowAdapter.getItem(listView.getLastVisiblePosition());
+                    progressBar.setVisibility(View.VISIBLE);
+                    Meeting meeting = (Meeting) meetingScrollerRowAdapter.getItem(listView.getLastVisiblePosition());
                     presender.getNextMeetings(meetingsList, MapperMeetingDto.toDto(meeting));
-                    //   progressBar.setVisibility(View.GONE);
-                }
-
-                else if (scrollState == SCROLL_STATE_IDLE && listView.getFirstVisiblePosition() == 0) { // пролистываем вверх
-                    //  progressBar.setVisibility(View.VISIBLE);
+                } else if (scrollState == SCROLL_STATE_IDLE && listView.getFirstVisiblePosition() == 0) { // пролистываем вверх
+                    progressBar.setVisibility(View.VISIBLE);
                     presender.getFirstNmeatings(meetingsList);
-                    //   progressBar.setVisibility(View.GONE);
                 }
             }
 
