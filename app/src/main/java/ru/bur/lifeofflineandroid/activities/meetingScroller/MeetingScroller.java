@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AbsListView;
 import android.widget.ListView;
@@ -19,6 +21,7 @@ import butterknife.ButterKnife;
 import ru.bur.lifeofflineandroid.LifeOfflineApp;
 import ru.bur.lifeofflineandroid.R;
 import ru.bur.lifeofflineandroid.activities.authorization.Authorization;
+import ru.bur.lifeofflineandroid.activities.createMeeting.MenuGroup;
 import ru.bur.lifeofflineandroid.common.AppIntents;
 import ru.bur.lifeofflineandroid.model.MapperMeetingDto;
 import ru.bur.lifeofflineandroid.model.Meeting;
@@ -90,4 +93,30 @@ public class MeetingScroller extends AppCompatActivity {
         Intent intent = new Intent(this, Authorization.class);
         startActivity(intent);
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(final Menu menu) {
+        menu.add(1 ,1, 1, "Все встречи");
+        menu.add(1, 2, 2, "Мои встречи");
+        menu.add(1, 3, 3, "Мой профиль");
+        menu.add(1, 4, 4, "Мои друзья");
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case 1:
+                this.setTitle("Все встречи");
+                break;
+            case 2:
+                this.setTitle("Мои встречи");
+                progressBar.setVisibility(View.VISIBLE);
+                presender.getOnlyUsersMeetings(meetingsList);
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+
 }

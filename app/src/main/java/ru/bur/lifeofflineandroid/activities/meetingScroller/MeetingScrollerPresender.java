@@ -110,7 +110,34 @@ public class MeetingScrollerPresender {
             }
 
         });
+    }
 
+    public void getOnlyUsersMeetings(List<Meeting> currMeetings) {
+        LifeOfflineApp.getApi().getMeetingsFilteredByUser().enqueue(new Callback<List<MeetingDto>>() {
+            @Override
+            public void onResponse(Call<List<MeetingDto>> call, Response<List<MeetingDto>> response) {
+                MainLogger.debug(LOG_TAG, "getMeetingsFilteredByUser(): response=" + response);
+
+                // если не авторизован, то вернуться на страницу авторизации.
+                if (response.isSuccessful() == false) {
+                    if (response.code() == HttpStatus.UNAUTHORIZED.value()) {
+                        cookies.set(CookiesEnum.token.toString(), null);
+                        view.goToAuthorization();
+                    }
+                } else {
+                    currMeetings.clear();
+                    List<MeetingDto> nextMeetingDtos = response.body();
+                    mergeNextMeetings(currMeetings, nextMeetingDtos);
+                    view.updateMeetingScroller();
+                    view.progressBar.setVisibility(View.GONE);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<MeetingDto>> call, Throwable t) {
+                MainLogger.error(LOG_TAG, "getMeetingsFilteredByUser(): Throwable=" + t);
+            }
+        });
 
     }
 

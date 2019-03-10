@@ -24,6 +24,9 @@ public interface LifeOfflineServerApi {
     @GET("/rest/meetings")
     Call<List<MeetingDto>> getFirstNmeatings();
 
+    @GET("/rest/meetings/filterByUser")
+    Call<List<MeetingDto>> getMeetingsFilteredByUser();
+
     @POST("/rest/meetings/next")
     Call<List<MeetingDto>> getNextMeetings(@Body MeetingDto meetingDto);
 
