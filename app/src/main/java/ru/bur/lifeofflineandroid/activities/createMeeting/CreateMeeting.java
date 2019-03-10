@@ -14,14 +14,8 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.TimePicker;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.time.ZoneId;
-import java.time.ZoneOffset;
-import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 
 import javax.inject.Inject;
@@ -81,6 +75,9 @@ public class CreateMeeting extends AppCompatActivity {
         createMeetingPresender.attachView(this);
         createMeetingPresender.tuneActivityMode();
         saveBtn.setOnClickListener(view -> {
+            if (!isValid())
+                return;
+
             Meeting meetingForShow = new Meeting();
             meetingForShow.setMeetingId(meeting.getMeetingId());
             meetingForShow.setName(meetingName.getText().toString());
@@ -90,7 +87,7 @@ public class CreateMeeting extends AppCompatActivity {
             meetingForShow.setDate(LocalDate.parse(meetingDate.getText(), formatterDate));
             meetingForShow.setTime(LocalTime.parse(meetingTime.getText(), formatterTime));
             meetingForShow.setDescription(meetingDescription.getText().toString());
-            MeetingDto meetingDto  =  MapperMeetingDto.toDto(meetingForShow);
+            MeetingDto meetingDto = MapperMeetingDto.toDto(meetingForShow);
             if (meeting.getMeetingId() == null) {
                 createMeetingPresender.createMeeting(meetingDto);
             } else {
@@ -107,7 +104,26 @@ public class CreateMeeting extends AppCompatActivity {
         });
     }
 
-
+    private boolean isValid() {
+        boolean result = true;
+        if (meetingName.getText().length() == 0) {
+            meetingName.setError("Обязательное поле");
+            result = false;
+        }
+        if (meetingPlace.getText().length() == 0) {
+            meetingPlace.setError("Обязательное поле");
+            result = false;
+        }
+        if (meetingDate.getText().length() == 0) {
+            meetingDate.setError("Обязательное поле");
+            result = false;
+        }
+        if (meetingTime.getText().length() == 0) {
+            meetingTime.setError("Обязательное поле");
+            result = false;
+        }
+        return result;
+    }
 
     @Override
     public boolean onCreateOptionsMenu(final Menu menu) {
@@ -179,7 +195,7 @@ public class CreateMeeting extends AppCompatActivity {
         meetingPlace.setText(meeting.getPlace());
         DateTimeFormatter formatterDate = DateTimeFormatter.ofPattern("dd.MM.yyyy");
         DateTimeFormatter formatterTime = DateTimeFormatter.ofPattern("HH:mm");
-        meetingDate.setText( meeting.getDate().format(formatterDate));
+        meetingDate.setText(meeting.getDate().format(formatterDate));
         meetingTime.setText(meeting.getTime().format(formatterTime));
         meetingDescription.setText(meeting.getDescription());
     }
