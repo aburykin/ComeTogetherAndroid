@@ -101,6 +101,10 @@ public class CreateMeetingPresender {
     }
 
     void tuneActivityMode() {
+        view.joinBtn.setVisibility(View.GONE);
+        view.leaveBtn.setVisibility(View.GONE);
+        view.saveBtn.setVisibility(View.GONE);
+
         Intent intent = view.getIntent();
         String action = intent.getAction();
         if (action.equals(AppIntents.MEETING_CREATE)) {
@@ -113,7 +117,6 @@ public class CreateMeetingPresender {
         } else if (action.equals(AppIntents.MEETING_SHOW)) {
             view.setTitle("Просмотр встречи");
             view.setUseMenuGroup(MenuGroup.VISIBLE_SHOW);
-            view.saveBtn.setVisibility(View.GONE);
             view.setAllEditableFalse();
             Meeting meeting = intent.getParcelableExtra(Meeting.class.getCanonicalName());
             getMeeting(meeting);

@@ -84,6 +84,10 @@ dependencies {
     implementation 'com.android.support:design:28.0.0'
     implementation 'ru.bur.life-offline:life-offline-api:0.0.1-SNAPSHOT'
 
+    // библиотека с набором элементов дизайна (иконок для кнопок)
+    //implementation 'com.google.android.material:material:1.0.0-rc01'
+   // implementation 'com.google.android.material:material:1.1.0-alpha04'
+
 }
 
 repositories {

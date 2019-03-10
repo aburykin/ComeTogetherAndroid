@@ -177,8 +177,8 @@ public class CreateMeeting extends AppCompatActivity {
     void fillDataFromIntent(Meeting meeting) {
         meetingName.setText(meeting.getName());
         meetingPlace.setText(meeting.getPlace());
-        DateTimeFormatter formatterDate = DateTimeFormatter.ofPattern("d.M.y");
-        DateTimeFormatter formatterTime = DateTimeFormatter.ofPattern("H:m");
+        DateTimeFormatter formatterDate = DateTimeFormatter.ofPattern("dd.MM.yyyy");
+        DateTimeFormatter formatterTime = DateTimeFormatter.ofPattern("HH:mm");
         meetingDate.setText( meeting.getDate().format(formatterDate));
         meetingTime.setText(meeting.getTime().format(formatterTime));
         meetingDescription.setText(meeting.getDescription());
